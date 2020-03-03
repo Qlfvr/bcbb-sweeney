@@ -15,8 +15,17 @@
 
 @import "node_modules/bootstrap/scss/bootstrap";
 
-$bg-color: blue; 
-
-body {
-  background: $bg-color;  
+.wrapper {
+  display: flex;
+  width: 100%;
+  align-items: stretch;
 }
+
+.content {
+
+  width: 100%;
+  background-color: red;
+}
+
+
+// @import "sidebar"; 
