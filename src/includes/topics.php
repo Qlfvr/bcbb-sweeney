@@ -11,6 +11,19 @@ die('Erreur : '.$e->getMessage());
 }
 
 
+$topics = $bdd->prepare('INSERT INTO users(nickname, email, password, signature)
+VALUES(:nickname, :email, :password, :signature)');
+$req->execute(array(
+
+'nickname' => $nickname,
+'email' => $email,
+'password' => $password,
+'signature' => $signature
+));
+
+
+
+
 ?>
 
 
