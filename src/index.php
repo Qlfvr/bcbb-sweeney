@@ -17,6 +17,24 @@
   <?php 
 include "includes/topmenu.php";
 ?>
+  <div class="wrapper">
+
+    <?php include "includes/sidebar.php";?>
+
+
+    <div class="content">
+
+      <?php include "includes/topics.php";?>
+
+
+    </div>
+
+  </div>
+
+
+
+
+
 
 
 
