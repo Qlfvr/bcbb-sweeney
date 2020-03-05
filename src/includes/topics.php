@@ -1,4 +1,6 @@
 <?php
+
+//Data base connexion with PDO
 try
 {
 // On se connecte à MySQL
@@ -24,7 +26,13 @@ if (isset($_POST["topic_title"],$_POST["date"],$_POST["board_id"],$_POST["user_i
     ));
 }
 ?>
-<form class="mb-2" action="index.php" method="post">
+
+<div class="d-flex flex-row-reverse">
+    <button type="button" class="btn btn-success" data-toggle="collapse" data-target="#topicForm" aria-expanded="false"
+        aria-controls="topicForm">New Topic</button>
+</div>
+
+<form id="topicForm" class="mb-2 collapse" action="index.php" method="post">
     <div class="form-group">
         <label for="topicTitle">Topic Title</label>
         <input type="text" class="form-control" id="topicTitle" name="topic_title">
@@ -49,32 +57,50 @@ if (isset($_POST["topic_title"],$_POST["date"],$_POST["board_id"],$_POST["user_i
 <!-- SHOW TOPICS -->
 
 <?php
-$req_topics = $bdd->prepare('SELECT * from topics WHERE boards_id =?');
+$req_topics = $bdd->prepare('SELECT * from topics WHERE boards_id =? ORDER BY creation_date DESC');
     $req_topics->execute(array(1));//Change to make dynamic
 
     // $donnees = $req_topics->fetch();
-    // print_r($donnees);
+    // print_r($donnees = $req_topics->fetch());
 
-    while ($donnees = $req_topics->fetch()) {
-        
-        echo $donnees["title"]."<br>";
-    }
+    ?>
 
-?>
+<?php while ($donnees = $req_topics->fetch()) : ?>
 
+<div class="card mb-2 mt-2">
+    <div class="container">
+        <div class="row">
+            <div class="col-10 p-3">
+                <h3 class="card-title">
+                    <a class="stretched-link text-decoration-none" href="messages.php?<?php echo $donnees["id"]?>">
+                        <?php echo $donnees["title"]; ?>
+                    </a>
+                </h3>
+                <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore iste soluta
+                    perferendis
+                    aspernatur
+                    totam
+                    cupiditate.
+                </p>
+            </div>
 
-
-
-
-
-<div class="card">
-    <div class="card-body">
-        <h2 class="card-title">
-            Titre du topic
-        </h2>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore iste soluta perferendis aspernatur totam
-            cupiditate
-            exercitationem sequi dolorum dolores officia, vel minus corrupti vero sed ipsum est autem ad eius.</p>
+            <div class="col-2 border-left p-3">
+                TEST
+            </div>
+        </div>
     </div>
-    <div class="card-footer">test</div>
+    <!-- <div class="card-footer d-flex flex-row-reverse">
+
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#QuickAnsModal">
+            Quick Answer </button>
+
+        <?php //echo $donnees["id"]?>
+
+    </div> -->
 </div>
+
+
+
+
+
+<?php endwhile; ?>

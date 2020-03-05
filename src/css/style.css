@@ -7143,13 +7143,18 @@ a.text-dark:hover, a.text-dark:focus {
   min-height: 100vh;
   background-color: #007bff; }
 
+body {
+  background-color: #e5e9f8; }
+
 .wrapper {
   display: flex;
   width: 100%;
   align-items: stretch; }
 
 .content {
+  display: block;
   width: 100%;
+  max-width: 900px;
   padding: 2rem; }
 
 .topic-card {
