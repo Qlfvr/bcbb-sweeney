@@ -14,9 +14,9 @@ die('Erreur : '.$e->getMessage());
 // create topic into database
 
 if (isset($_POST["topic_title"],$_POST["date"],$_POST["board_id"],$_POST["user_id"])) {
-    $topic = $bdd->prepare('INSERT INTO topics(title, creation_date, boards_id, users_id)
+    $create_topic = $bdd->prepare('INSERT INTO topics(title, creation_date, boards_id, users_id)
     VALUES(:title, :creation_date, :boards_id, :users_id)');
-    $topic->execute(array(
+    $create_topic->execute(array(
         'title' => $_POST["topic_title"],
         'creation_date' => $_POST["date"],
         'boards_id' => $_POST["board_id"],
@@ -44,6 +44,24 @@ if (isset($_POST["topic_title"],$_POST["date"],$_POST["board_id"],$_POST["user_i
     <input type="hidden" name="user_id" value="1" /> <!-- Change to make dynamic-->
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+
+
+<!-- SHOW TOPICS -->
+
+<?php
+$req_topics = $bdd->prepare('SELECT * from topics WHERE boards_id =?');
+    $req_topics->execute(array(1));//Change to make dynamic
+
+    // $donnees = $req_topics->fetch();
+    // print_r($donnees);
+
+    while ($donnees = $req_topics->fetch()) {
+        
+        echo $donnees["title"]."<br>";
+    }
+
+?>
+
 
 
 
