@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,6 +28,9 @@ include "includes/topmenu.php";
     </div>
 
   </div>
+
+
+
 
   <script src="/js/jquery.min.js"></script>
   <script src="/js/bootstrap.min.js"></script>
