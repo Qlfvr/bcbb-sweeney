@@ -11,10 +11,13 @@ catch(Exception $e)
 // En cas d'erreur, on affiche un message et on arrête tout
 die('Erreur : '.$e->getMessage());
 }
-?>
 
-<?php
 
+//
+
+
+
+//PREPARE REQUEST TO SHOW MESSAGES
     $test=$_GET["topic_id"];
     $req_messages = $bdd->prepare('SELECT * FROM messages WHERE topics_id =? ORDER BY creation_date ASC');
     $req_messages->execute(array($_GET["topic_id"]));
@@ -52,10 +55,8 @@ die('Erreur : '.$e->getMessage());
 
                         <form action="" method="post">
 
-                            <textarea name="" class="write-message p-2"></textarea>
-
-
-
+                            <textarea name="" class="write-message p-2"
+                                placeholder="Type your message here..."></textarea>
                             <div class="card-footer d-flex flex-row-reverse">
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
