@@ -47,32 +47,35 @@ if(isset($_POST['submit_sign_up'])){
 ?>
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign in or sign up</title>
 </head>
+
 <body>
 
-<!-- Sign In -->
+    <!-- Sign In -->
 
     <form method="post" action="loggin.php">
         <p>Create an account :</p>
-        <input type="text" name="nickname" id="nickname" placeholder="Nickname" required/><br/>
-        <input type="email" name="email" id="email" placeholder="E-mail" required/><br/>
-        <input type="password" name="password" id="password" placeholder="Password" required/><br/>
+        <input type="text" name="nickname" id="nickname" placeholder="Nickname" required /><br />
+        <input type="email" name="email" id="email" placeholder="E-mail" required /><br />
+        <input type="password" name="password" id="password" placeholder="Password" required /><br />
         <!-- <input type="password" name="password_confirm" id="password_confirm" placeholder="Confirmation" required/></br> -->
-        <input type="submit" name="submit_sign_in" id="submit_sign_in" value="Sign in"/>
+        <input type="submit" name="submit_sign_in" id="submit_sign_in" value="Sign in" />
     </form>
 
-<!-- Sign Up -->
+    <!-- Sign Up -->
 
     <form method="post" action="loggin.php">
         <p>Connection :</p>
-        <input type="text" name="nickname" id="nickname" placeholder="Nickname" required/><br/>
-        <input type="password" name="password" id="password" placeholder="Password" required/><br/>
-        <input type="submit" name="submit_sign_up" id="submit_sign_up" value="Sign up"/>
+        <input type="text" name="nickname" id="nickname" placeholder="Nickname" required /><br />
+        <input type="password" name="password" id="password" placeholder="Password" required /><br />
+        <input type="submit" name="submit_sign_up" id="submit_sign_up" value="Sign up" />
     </form>
 
 </body>
+
 </html>
