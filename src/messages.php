@@ -19,11 +19,6 @@ die('Erreur : '.$e->getMessage());
     $req_messages = $bdd->prepare('SELECT * FROM messages WHERE topics_id =? ORDER BY creation_date ASC');
     $req_messages->execute(array($_GET["topic_id"]));
 ?>
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,53 +31,42 @@ die('Erreur : '.$e->getMessage());
 </head>
 
 <body>
-
     <?php include "includes/topmenu.php";?>
     <div class="wrapper">
-
         <?php include "includes/sidebar.php";?>
-
         <div class="content">
-
-
             <div class="card mb-2 mt-2">
                 <div class="card-header">
-                    <h2> <?php echo $_GET["topic_title"] ?></h2>
+                    <h2><?php echo $_GET["topic_title"] ?></h2>
                 </div>
                 <div class="card-body">
-
                     <?php while ($messages = $req_messages->fetch()) : ?>
+                    <div class="card m-3">
+                        <div class="card-body bg-light-gray">
+                            <?php echo$messages["content"]."<br>"; ?>
+                        </div>
+                    </div>
+                    <?php endwhile ?>
 
                     <div class="card m-3">
 
-                        <div class="card-body bg-light-gray">
+                        <form action="" method="post">
 
-                            <?php echo$messages["content"]."<br>"; ?>
+                            <textarea name="" class="write-message p-2"></textarea>
 
-                        </div>
+
+
+                            <div class="card-footer d-flex flex-row-reverse">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
                     </div>
-
-                    <?php endwhile ?>
-
-
-
-
-
 
 
                 </div>
-
             </div>
-
-
-
-
-
-
         </div>
-
     </div>
-
     <script src="/js/jquery.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
 </body>

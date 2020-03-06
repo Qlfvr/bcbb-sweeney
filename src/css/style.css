@@ -7164,3 +7164,7 @@ body {
   display: flex;
   flex-direction: row;
   padding: 1rem; }
+
+.write-message {
+  width: 100%;
+  border: none; }
