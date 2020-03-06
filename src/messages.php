@@ -13,7 +13,18 @@ die('Erreur : '.$e->getMessage());
 }
 
 
-//
+// REQUEST for writing message
+
+if (isset($_POST["topic_title"],$_POST["date"],$_POST["board_id"],$_POST["user_id"])) {
+$create_topic = $bdd->prepare('INSERT INTO topics(title, creation_date, boards_id, users_id)
+VALUES(:title, :creation_date, :boards_id, :users_id)');
+$create_topic->execute(array(
+'title' => $_POST["topic_title"],
+'creation_date' => $_POST["date"],
+'boards_id' => $_POST["board_id"],
+'users_id' => $_POST["user_id"]
+));
+}
 
 
 
