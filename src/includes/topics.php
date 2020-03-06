@@ -72,7 +72,8 @@ $req_topics = $bdd->prepare('SELECT * from topics WHERE boards_id =? ORDER BY cr
         <div class="row">
             <div class="col-10 p-3">
                 <h3 class="card-title">
-                    <a class="stretched-link text-decoration-none" href="messages.php?<?php echo $donnees["id"]?>">
+                    <a class="stretched-link text-decoration-none"
+                        href="messages.php?<?php echo "topic_id=".$donnees["id"]."&topic_title=".$donnees["title"]?>">
                         <?php echo $donnees["title"]; ?>
                     </a>
                 </h3>
@@ -84,8 +85,8 @@ $req_topics = $bdd->prepare('SELECT * from topics WHERE boards_id =? ORDER BY cr
                 </p>
             </div>
 
-            <div class="col-2 border-left p-3">
-                TEST
+            <div class="col-2 border-left p-3 d-flex justify-content-center">
+                <i class="fas fa-comment-alt fa-4x text-primary"></i>
             </div>
         </div>
     </div>

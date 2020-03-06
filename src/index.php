@@ -1,15 +1,12 @@
 <!DOCTYPE html>
-<html class="no-js" lang="en">
+<html lang="en">
 
 <head>
-  <title>AWESOME-GAME ///</title>
-  <meta http-equiv="x-ua-compatible" content="ie=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800" />
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-  <!-- <link rel="stylesheet" href="/css/bootstrap.css" /> -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://kit.fontawesome.com/a990d1fe00.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="/css/style.css" />
+  <title>Document</title>
 </head>
 
 <body>

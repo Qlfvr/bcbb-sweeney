@@ -1,38 +1,90 @@
 <?php
 
-// create topic into database
-
-if (isset($_POST["content"],$_POST["create_date"],$_POST["topic_id"],$_POST["user_id"])) {
-$create_message = $bdd->prepare('INSERT INTO messages(content, creation_date, topics_id, users_id)
-VALUES(:title, :creation_date, :boards_id, :users_id)');
-$create_message->execute(array(
-'content' => $_POST["topic_title"],
-'creation_date' => $_POST["date"],
-'topics_id' => $_POST["board_id"],
-'users_id' => $_POST["user_id"]
-));
+//Data base connexion with PDO
+try
+{
+// On se connecte à MySQL
+$bdd = new PDO('mysql:host=mysql;dbname=bcbb;charset=utf8', 'root', 'root');
 }
+catch(Exception $e)
+{
+// En cas d'erreur, on affiche un message et on arrête tout
+die('Erreur : '.$e->getMessage());
+}
+?>
+
+<?php
+
+    $test=$_GET["topic_id"];
+    $req_messages = $bdd->prepare('SELECT * FROM messages WHERE topics_id =? ORDER BY creation_date ASC');
+    $req_messages->execute(array($_GET["topic_id"]));
 ?>
 
 
 
-<form id="topicForm" class="mb-2" action="index.php" method="post">
-    <div class="form-group">
-        <label for="messageContent">Message</label>
-        <input type="text" class="form-control" id="topicTitle" name="topic_title">
-        <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/a990d1fe00.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/style.css" />
+    <title>Document</title>
+</head>
+
+<body>
+
+    <?php include "includes/topmenu.php";?>
+    <div class="wrapper">
+
+        <?php include "includes/sidebar.php";?>
+
+        <div class="content">
+
+
+            <div class="card mb-2 mt-2">
+                <div class="card-header">
+                    <h2> <?php echo $_GET["topic_title"] ?></h2>
+                </div>
+                <div class="card-body">
+
+                    <?php while ($messages = $req_messages->fetch()) : ?>
+
+                    <div class="card m-3">
+
+                        <div class="card-body bg-light-gray">
+
+                            <?php echo$messages["content"]."<br>"; ?>
+
+                        </div>
+                    </div>
+
+                    <?php endwhile ?>
+
+
+
+
+
+
+
+                </div>
+
+            </div>
+
+
+
+
+
+
+        </div>
+
     </div>
-    <div class="form-group">
-        <label for="boardId">Choose a board</label><br>
-        <select name="board_id" id="boardId">
-            <!-- Change to make dynamic-->
-            <option value="1">General</option>
-            <option value="2">Development</option>
-            <option value="3">Smalltalk</option>
-            <option value="4">Events</option>
-        </select>
-    </div>
-    <input type="hidden" name="date" value="<?php echo$now = date('Y-m-d H:i:s'); ?>" />
-    <input type="hidden" name="user_id" value="1" /> <!-- Change to make dynamic-->
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+</body>
+
+</html>
