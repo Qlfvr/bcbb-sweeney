@@ -58,7 +58,7 @@ if(isset($_POST['submit_sign_up'])){
 
     <!-- Sign In -->
 
-    <form method="post" action="loggin.php">
+    <form method="post" action="login.php">
         <p>Create an account :</p>
         <input type="text" name="nickname" id="nickname" placeholder="Nickname" required /><br />
         <input type="email" name="email" id="email" placeholder="E-mail" required /><br />
@@ -69,7 +69,7 @@ if(isset($_POST['submit_sign_up'])){
 
     <!-- Sign Up -->
 
-    <form method="post" action="loggin.php">
+    <form method="post" action="login.php">
         <p>Connection :</p>
         <input type="text" name="nickname" id="nickname" placeholder="Nickname" required /><br />
         <input type="password" name="password" id="password" placeholder="Password" required /><br />

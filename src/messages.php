@@ -15,13 +15,13 @@ die('Erreur : '.$e->getMessage());
 
 // REQUEST for writing message
 
-if (isset($_POST["topic_title"],$_POST["date"],$_POST["board_id"],$_POST["user_id"])) {
-$create_topic = $bdd->prepare('INSERT INTO topics(title, creation_date, boards_id, users_id)
-VALUES(:title, :creation_date, :boards_id, :users_id)');
-$create_topic->execute(array(
-'title' => $_POST["topic_title"],
+if (isset($_POST["message_content"],$_POST["date"],$_POST["topic_id"],$_POST["user_id"])) {
+$create_message = $bdd->prepare('INSERT INTO messages(content, creation_date, topics_id, users_id)
+VALUES(:content, :creation_date, :topics_id, :users_id)');
+$create_message->execute(array(
+'content' => $_POST["message_content"],
 'creation_date' => $_POST["date"],
-'boards_id' => $_POST["board_id"],
+'topics_id' => $_POST["topic_id"],
 'users_id' => $_POST["user_id"]
 ));
 }
@@ -29,7 +29,6 @@ $create_topic->execute(array(
 
 
 //PREPARE REQUEST TO SHOW MESSAGES
-    $test=$_GET["topic_id"];
     $req_messages = $bdd->prepare('SELECT * FROM messages WHERE topics_id =? ORDER BY creation_date ASC');
     $req_messages->execute(array($_GET["topic_id"]));
 ?>
@@ -64,13 +63,19 @@ $create_topic->execute(array(
 
                     <div class="card m-3">
 
-                        <form action="" method="post">
+                        <form
+                            action="messages.php?topic_id=<?php echo$_GET["topic_id"]."&topic_title=".$_GET["topic_title"] ?>"
+                            method="post">
 
-                            <textarea name="" class="write-message p-2"
+                            <textarea name="message_content" class="write-message p-2"
                                 placeholder="Type your message here..."></textarea>
                             <div class="card-footer d-flex flex-row-reverse">
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
+                            <input type="hidden" name="date" value="<?php echo$now = date('Y-m-d H:i:s'); ?>" />
+                            <input type="hidden" name="user_id" value="1" /> <!-- change to make dynamic -->
+                            <input type="hidden" name="topic_id" value="<?php echo $_GET["topic_id"] ?>" />
+                            <!-- get the $_GET[topic_id] and pass it to add message adlgorithm with POST -->
                         </form>
                     </div>
 
