@@ -28,7 +28,10 @@ if (isset($_POST["topic_title"],$_POST["date"],$_POST["board_id"],$_POST["user_i
 
 // SHOW TOPICS REQUEST 
 
-$req_topics = $bdd->prepare('SELECT * from topics WHERE boards_id =? ORDER BY creation_date DESC');
+$req_topics = $bdd->prepare(
+'SELECT topics.*, users.email AS creator_email from topics INNER JOIN users ON topics.users_id = users.id WHERE boards_id =? ORDER BY creation_date DESC'
+
+);
 $req_topics->execute(array($_GET["board_id"]));
 
 
@@ -37,21 +40,16 @@ $req_topics->execute(array($_GET["board_id"]));
 $req_last_message = $bdd->prepare('SELECT * from messages WHERE topics_id =? ORDER BY creation_date DESC LIMIT 1');
 
 
-
-
-
 // *****************************************************************************
 ?>
 
 
-
-
+<?php if (!empty($_SESSION)): ?>
 <div class="d-flex flex-row-reverse">
     <button type="button" class="btn btn-success" data-toggle="collapse" data-target="#topicForm" aria-expanded="false"
         aria-controls="topicForm">New Topic</button>
 </div>
-
-<form id="topicForm" class="mb-2 collapse" action="index.php" method="post">
+<form id="topicForm" class="mb-2 collapse" action="index.php?board_id=<?php echo$_GET["board_id"]?>" method="post">
     <div class="form-group">
         <label for="topicTitle">Topic Title</label>
         <input type="text" class="form-control" id="topicTitle" name="topic_title">
@@ -68,9 +66,16 @@ $req_last_message = $bdd->prepare('SELECT * from messages WHERE topics_id =? ORD
         </select>
     </div>
     <input type="hidden" name="date" value="<?php echo$now = date('Y-m-d H:i:s'); ?>" />
-    <input type="hidden" name="user_id" value="1" /> <!-- Change to make dynamic-->
+    <input type="hidden" name="user_id" value="<?php echo $_SESSION["id"] ?>" /> <!-- Change to make dynamic-->
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+
+<?php else : ?>
+
+<p>Please connect to see content...</p>
+
+
+<?php endif; ?>
 
 
 
@@ -79,7 +84,13 @@ $req_last_message = $bdd->prepare('SELECT * from messages WHERE topics_id =? ORD
 <div class="card mb-2 mt-2">
     <div class="container">
         <div class="row">
-            <div class="col-10 p-3">
+
+            <div class="col-2 border-right p-3 d-flex justify-content-center">
+
+                <img class="profile-pic" src="<?php echo get_gravatar($topics["creator_email"])?>" alt="">
+            </div>
+
+            <div class="col-8 p-3">
                 <h3 class="card-title">
                     <a class="stretched-link text-decoration-none"
                         href="messages.php?<?php echo "topic_id=".$topics["id"]."&topic_title=".$topics["title"]?>">
@@ -94,15 +105,7 @@ $req_last_message = $bdd->prepare('SELECT * from messages WHERE topics_id =? ORD
                                         
                     echo$last_message["content"];
 
-                    }
-                    
-                    ?>
-
-
-
-
-
-
+                    } ?>
                 </p>
             </div>
 
