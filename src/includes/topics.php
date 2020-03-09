@@ -25,7 +25,26 @@ if (isset($_POST["topic_title"],$_POST["date"],$_POST["board_id"],$_POST["user_i
         'users_id' => $_POST["user_id"]
     ));
 }
+
+// SHOW TOPICS REQUEST 
+
+$req_topics = $bdd->prepare('SELECT * from topics WHERE boards_id =? ORDER BY creation_date DESC');
+$req_topics->execute(array($_GET["board_id"]));
+
+
+// REQUEST LAST MESSAGE FOR EVERY TOPIC
+
+$req_last_message = $bdd->prepare('SELECT * from messages WHERE topics_id =? ORDER BY creation_date DESC LIMIT 1');
+
+
+
+
+
+// *****************************************************************************
 ?>
+
+
+
 
 <div class="d-flex flex-row-reverse">
     <button type="button" class="btn btn-success" data-toggle="collapse" data-target="#topicForm" aria-expanded="false"
@@ -54,17 +73,8 @@ if (isset($_POST["topic_title"],$_POST["date"],$_POST["board_id"],$_POST["user_i
 </form>
 
 
-<!-- SHOW TOPICS -->
 
-<?php
-$req_topics = $bdd->prepare('SELECT * from topics WHERE boards_id =? ORDER BY creation_date DESC');
-    $req_topics->execute(array($_GET["board_id"]));
-
-    // $donnees = $req_topics->fetch();
-    // print_r($donnees = $req_topics->fetch());
-?>
-
-<?php while ($donnees = $req_topics->fetch()) : ?>
+<?php while ($topics = $req_topics->fetch()) : ?>
 
 <div class="card mb-2 mt-2">
     <div class="container">
@@ -72,15 +82,27 @@ $req_topics = $bdd->prepare('SELECT * from topics WHERE boards_id =? ORDER BY cr
             <div class="col-10 p-3">
                 <h3 class="card-title">
                     <a class="stretched-link text-decoration-none"
-                        href="messages.php?<?php echo "topic_id=".$donnees["id"]."&topic_title=".$donnees["title"]?>">
-                        <?php echo $donnees["title"]; ?>
+                        href="messages.php?<?php echo "topic_id=".$topics["id"]."&topic_title=".$topics["title"]?>">
+                        <?php echo $topics["title"]; ?>
                     </a>
                 </h3>
-                <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore iste soluta
-                    perferendis
-                    aspernatur
-                    totam
-                    cupiditate.
+                <p class="text-muted">
+
+                    <?php $req_last_message->execute(array($topics["id"])); 
+
+                    while ($last_message = $req_last_message->fetch()){
+                                        
+                    echo$last_message["content"];
+
+                    }
+                    
+                    ?>
+
+
+
+
+
+
                 </p>
             </div>
 
