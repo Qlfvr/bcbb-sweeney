@@ -15,8 +15,44 @@
 
 @import "node_modules/bootstrap/scss/bootstrap";
 
-$bg-color: blue; 
+@import "sidebar";
+
+$light-gray: #e5e9f8;
+
+.bg-light-gray {
+  background-color: $light-gray;
+
+}
+
 
 body {
-  background: $bg-color;  
+
+  background-color: $light-gray;
+}
+
+.wrapper {
+  display: flex;
+  width: 100%;
+  align-items: stretch;
+}
+
+.content {
+  display: block;
+  width: 100%;
+  max-width: 900px;
+  padding: 2rem;
+
+
+}
+
+.topic-card {
+  display: flex;
+  flex-direction: row;
+  padding: 1rem;
+}
+
+.write-message {
+
+  width: 100%;
+  border: none;
 }
