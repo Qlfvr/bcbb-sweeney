@@ -29,7 +29,7 @@ if (isset($_POST["topic_title"],$_POST["date"],$_POST["board_id"],$_POST["user_i
 // SHOW TOPICS REQUEST 
 
 $req_topics = $bdd->prepare(
-'SELECT topics.*, users.email AS creator_email from topics INNER JOIN users ON topics.users_id = users.id WHERE boards_id =? ORDER BY creation_date DESC'
+'SELECT topics.*, users.nickname AS creator_nickname, users.email AS creator_email from topics INNER JOIN users ON topics.users_id = users.id WHERE boards_id =? ORDER BY creation_date DESC'
 
 );
 $req_topics->execute(array($_GET["board_id"]));
@@ -85,9 +85,11 @@ $req_last_message = $bdd->prepare('SELECT * from messages WHERE topics_id =? ORD
     <div class="container">
         <div class="row">
 
-            <div class="col-2 border-right p-3 d-flex justify-content-center">
+            <div class="col-2 border-right p-3 text-center">
 
-                <img class="profile-pic" src="<?php echo get_gravatar($topics["creator_email"])?>" alt="">
+                <img class="profile-pic m-auto" src="<?php echo get_gravatar($topics["creator_email"])?>" alt="">
+                <p class="text-muted"><?php echo $topics["creator_nickname"]?></p>
+
             </div>
 
             <div class="col-8 p-3">
