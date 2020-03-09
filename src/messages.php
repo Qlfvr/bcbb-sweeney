@@ -1,4 +1,5 @@
 <?php
+session_start();
 //Data base connexion with PDO
 try
 {
