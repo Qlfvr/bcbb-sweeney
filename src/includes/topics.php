@@ -58,12 +58,11 @@ if (isset($_POST["topic_title"],$_POST["date"],$_POST["board_id"],$_POST["user_i
 
 <?php
 $req_topics = $bdd->prepare('SELECT * from topics WHERE boards_id =? ORDER BY creation_date DESC');
-    $req_topics->execute(array(1));//Change to make dynamic
+    $req_topics->execute(array($_GET["board_id"]));
 
     // $donnees = $req_topics->fetch();
     // print_r($donnees = $req_topics->fetch());
-
-    ?>
+?>
 
 <?php while ($donnees = $req_topics->fetch()) : ?>
 
