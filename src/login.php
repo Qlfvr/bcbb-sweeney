@@ -15,7 +15,7 @@ if(isset($_POST['submit_sign_up'])){ // Si il y a envoie du formulaire valide, e
         'email' => htmlspecialchars($_POST['email']),
         'password' => htmlspecialchars(password_hash($_POST['password'], PASSWORD_DEFAULT))
        ));
-       echo 'Welcome, new user';
+       header("Location: index.php");
    }
 
 // Récup du user et de son password pour Sign in
