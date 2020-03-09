@@ -15,7 +15,9 @@ if(isset($_POST['submit_sign_up'])){ // Si il y a envoie du formulaire valide, e
         'email' => htmlspecialchars($_POST['email']),
         'password' => htmlspecialchars(password_hash($_POST['password'], PASSWORD_DEFAULT))
        ));
-       header("Location: index.php");
+    //    echo 'Welcome, new user';
+    header("Location: index.php");
+       
    }
 
 // Récup du user et de son password pour Sign in
@@ -29,7 +31,8 @@ if(isset($_POST['submit_sign_in'])){
     $resultat = $request_user_and_password->fetch();
     
     if(!$resultat) {
-        echo 'Wrong nickname ! :(';
+        // echo 'Wrong nickname ! :(';
+        header("Location: index.php");
     } else {
         //Comparaison password du form avec password du bdd
         $password_correct = password_verify($password, $resultat['password']);
@@ -39,7 +42,8 @@ if(isset($_POST['submit_sign_in'])){
             header("Location: index.php"); // Une fois tout ok, redirige vers index.php
             die(); //stop
         } else {
-            echo 'Wrong password ! :(';
+            // echo 'Wrong password ! :(';
+            header("Location: index.php");
         }
     }
 
