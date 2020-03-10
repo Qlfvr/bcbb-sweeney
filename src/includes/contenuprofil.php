@@ -51,7 +51,7 @@ $req_info->execute(array($_SESSION["id"]));
                     <li class="border border-dark rounded align-sg text-sg"><span class="pull-left"><strong>Pseudo : </strong></span><?php  echo $users['nickname'];?></li>
                     <li class="border border-dark rounded align-sg text-sg"><span class="pull-left"><strong>Signature : </strong></span><?php echo $users['signature'];?></li>
                     <li class="border border-dark rounded align-sg text-sg"><span class="pull-left"><strong>Adress mail : </strong></span><?php  echo $users['email'];?></li>
-                    <li class="border border-dark rounded align-sg text-sg scroll"><span class="pull-left"><strong>code : </strong></span><?php  echo $users['password'];?></li>
+                   
                     <?php endwhile ?>
                 </ul>
                 
