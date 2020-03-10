@@ -1,4 +1,5 @@
 <?php session_start(); ?>
+<?php include "includes/functions.php";?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,6 +22,10 @@ include "includes/topmenu.php";
 
 
     <div class="content">
+
+
+
+
 
       <?php include "includes/topics.php";?>
 

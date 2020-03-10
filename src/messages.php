@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 //Data base connexion with PDO
 try
 {
@@ -11,10 +11,7 @@ catch(Exception $e)
 // En cas d'erreur, on affiche un message et on arrête tout
 die('Erreur : '.$e->getMessage());
 }
-
-
 // REQUEST for writing message
-
 if (isset($_POST["message_content"],$_POST["date"],$_POST["topic_id"],$_POST["user_id"])) {
 $create_message = $bdd->prepare('INSERT INTO messages(content, creation_date, topics_id, users_id)
 VALUES(:content, :creation_date, :topics_id, :users_id)');
@@ -25,9 +22,6 @@ $create_message->execute(array(
 'users_id' => $_POST["user_id"]
 ));
 }
-
-
-
 //PREPARE REQUEST TO SHOW MESSAGES
     $req_messages = $bdd->prepare('SELECT * FROM messages WHERE topics_id =? ORDER BY creation_date ASC');
     $req_messages->execute(array($_GET["topic_id"]));
@@ -57,16 +51,15 @@ $create_message->execute(array(
                     <div class="card m-3">
                         <div class="card-body bg-light-gray">
                             <?php echo$messages["content"]."<br>"; ?>
+                            <?php // echo$messages["signature"]."<br>"; ?>
                         </div>
                     </div>
                     <?php endwhile ?>
 
                     <div class="card m-3">
-
                         <form
                             action="messages.php?topic_id=<?php echo$_GET["topic_id"]."&topic_title=".$_GET["topic_title"] ?>"
                             method="post">
-
                             <textarea name="message_content" class="write-message p-2"
                                 placeholder="Type your message here..."></textarea>
                             <div class="card-footer d-flex flex-row-reverse">
@@ -78,8 +71,6 @@ $create_message->execute(array(
                             <!-- get the $_GET[topic_id] and pass it to add message adlgorithm with POST -->
                         </form>
                     </div>
-
-
                 </div>
             </div>
         </div>

@@ -7168,3 +7168,8 @@ body {
 .write-message {
   width: 100%;
   border: none; }
+
+.profile-pic {
+  height: 48px;
+  width: 48px;
+  border-radius: 100%; }

@@ -5,19 +5,19 @@
         <!-- <li class="nav-item p-2">Main Menu</li> -->
 
         <li class="nav-item">
-            <a class="nav-link bg-primary text-white" href="#">Boards</a>
+            <span class="color-white text-white p-3 font-weight-bold" href="#">Boards</span>
         </li>
         <li class="nav-item">
-            <a class="nav-link bg-primary text-white pl-5" href="#">General</a>
+            <a class="nav-link bg-primary text-white pl-5" href="/?board_id=1">General</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link bg-primary text-white pl-5" href="#">Development</a>
+            <a class="nav-link bg-primary text-white pl-5" href="/?board_id=2">Development</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link bg-primary text-white pl-5" href="#">Smalltalk</a>
+            <a class="nav-link bg-primary text-white pl-5" href="/?board_id=3">Smalltalk</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link bg-primary text-white pl-5" href="#">Events</a>
+            <a class="nav-link bg-primary text-white pl-5" href="/?board_id=4">Events</a>
         </li>
 
         <li class="nav-item">
