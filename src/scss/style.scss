@@ -63,6 +63,43 @@ body {
   height: 48px;
   width: 48px;
   border-radius: 100%;
+}
+
+.card-message:nth-of-type(odd) {
+
+  &-body {
+    flex-direction: row-reverse;
+  }
+
+  &-footer {
+    //
+  }
 
 
 }
+
+
+// .card-message:nth-child(odd) .card-body {
+//   flex-direction: row-reverse;
+
+// }
+
+// .card-message:nth-child(even) .card-body {
+//   flex-direction: row;
+
+// }
+
+
+// .card-message {
+
+//   &-body:nth-child(odd) {
+//     flex-direction: row;
+//     color: red;
+//   }
+
+//   // &-footer {
+//   //   //
+//   // }
+
+
+// }

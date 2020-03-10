@@ -1,5 +1,7 @@
 <?php
 session_start();
+ include "includes/functions.php";
+
 //Data base connexion with PDO
 try
 {
@@ -23,8 +25,13 @@ $create_message->execute(array(
 ));
 }
 //PREPARE REQUEST TO SHOW MESSAGES
-    $req_messages = $bdd->prepare('SELECT * FROM messages WHERE topics_id =? ORDER BY creation_date ASC');
-    $req_messages->execute(array($_GET["topic_id"]));
+// $req_messages = $bdd->prepare('SELECT * FROM messages WHERE topics_id =? ORDER BY creation_date ASC');
+$req_messages = $bdd->prepare(
+'SELECT messages.*, users.nickname AS nickname, users.email AS email from messages INNER JOIN users ON
+messages.users_id = users.id WHERE topics_id =? ORDER BY creation_date ASC'
+
+);
+$req_messages->execute(array($_GET["topic_id"]));
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -48,10 +55,39 @@ $create_message->execute(array(
                 </div>
                 <div class="card-body">
                     <?php while ($messages = $req_messages->fetch()) : ?>
-                    <div class="card m-3">
-                        <div class="card-body bg-light-gray">
-                            <?php echo$messages["content"]."<br>"; ?>
-                            <?php // echo$messages["signature"]."<br>"; ?>
+
+                    <div class="card card-message m-3">
+
+
+                        <div class="card-body p-2 card-message-body bg-light-gray d-flex">
+
+
+                            <div class="pr-2 text-center border-right">
+
+                                <img class="profile-pic m-auto" src="<?php echo get_gravatar($messages["email"])?>"
+                                    alt=""> <br>
+                                <span class="text-muted"><?php echo $messages["nickname"]?></span>
+
+                            </div>
+
+                            <div class="pl-3 pr-3">
+                                <?php echo$messages["content"]."<br>"; ?>
+
+                            </div>
+
+
+                        </div>
+                        <div class="card-footer card-message-footer">
+
+                            <i class="fas fa-edit text-primary"></i>&nbsp;
+                            <i class="fas fa-trash-alt text-danger"></i>
+
+                            <div class="float-right text-muted">
+                                <?php echo$messages["creation_date"] ?>
+                            </div>
+
+
+
                         </div>
                     </div>
                     <?php endwhile ?>
@@ -66,7 +102,8 @@ $create_message->execute(array(
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                             <input type="hidden" name="date" value="<?php echo$now = date('Y-m-d H:i:s'); ?>" />
-                            <input type="hidden" name="user_id" value="1" /> <!-- change to make dynamic -->
+                            <input type="hidden" name="user_id" value="<?php echo$_SESSION["id"] ?>" />
+                            <!-- change to make dynamic -->
                             <input type="hidden" name="topic_id" value="<?php echo $_GET["topic_id"] ?>" />
                             <!-- get the $_GET[topic_id] and pass it to add message adlgorithm with POST -->
                         </form>

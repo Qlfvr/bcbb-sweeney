@@ -7173,3 +7173,6 @@ body {
   height: 48px;
   width: 48px;
   border-radius: 100%; }
+
+.card-message:nth-of-type(odd)-body {
+  flex-direction: row-reverse; }
