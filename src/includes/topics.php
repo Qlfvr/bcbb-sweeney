@@ -39,13 +39,29 @@ $req_topics->execute(array($_GET["board_id"]));
 
 $req_last_message = $bdd->prepare('SELECT * from messages WHERE topics_id =? ORDER BY creation_date DESC LIMIT 1');
 
+// Boards info 
+
+$req_board_details = $bdd->prepare('SELECT * from boards WHERE id =?');
+$req_board_details->execute(array($_GET["board_id"]));
+
 
 // *****************************************************************************
 ?>
 
 
+
+<?php while ($board = $req_board_details->fetch()) : ?>
+
+<h1><?php echo $board["name"]?></h1>
+<p><?php echo $board["description"]?></p>
+
+<?php endwhile ?>
+
+
+
+
 <?php if (!empty($_SESSION)): ?>
-<div class="d-flex flex-row-reverse">
+<div class="d-flex flex-row">
     <button type="button" class="btn btn-success" data-toggle="collapse" data-target="#topicForm" aria-expanded="false"
         aria-controls="topicForm">New Topic</button>
 </div>
@@ -55,17 +71,8 @@ $req_last_message = $bdd->prepare('SELECT * from messages WHERE topics_id =? ORD
         <input type="text" class="form-control" id="topicTitle" name="topic_title">
         <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
     </div>
-    <div class="form-group">
-        <label for="boardId">Choose a board</label><br>
-        <select name="board_id" id="boardId">
-            <!-- Change to make dynamic-->
-            <option value="1">General</option>
-            <option value="2">Development</option>
-            <option value="3">Smalltalk</option>
-            <option value="4">Events</option>
-        </select>
-    </div>
 
+    <input type="hidden" name="board_id" value="<?php echo $_GET["board_id"] ?>" />
     <input type="hidden" name="date" value="<?php echo$now = date('Y-m-d H:i:s'); ?>" />
     <input type="hidden" name="user_id" value="<?php echo $_SESSION["id"] ?>" /> <!-- Change to make dynamic-->
     <button type="submit" class="btn btn-primary">Submit</button>
@@ -81,6 +88,8 @@ $req_last_message = $bdd->prepare('SELECT * from messages WHERE topics_id =? ORD
 
 
 <?php while ($topics = $req_topics->fetch()) : ?>
+
+
 
 <div class="card mb-2 mt-2">
     <div class="container">
@@ -117,14 +126,6 @@ $req_last_message = $bdd->prepare('SELECT * from messages WHERE topics_id =? ORD
             </div>
         </div>
     </div>
-    <!-- <div class="card-footer d-flex flex-row-reverse">
-
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#QuickAnsModal">
-            Quick Answer </button>
-
-        <?php //echo $donnees["id"]?>
-
-    </div> -->
 </div>
 
 
