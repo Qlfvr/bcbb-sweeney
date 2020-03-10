@@ -78,6 +78,9 @@ $req_board_details->execute(array($_GET["board_id"]));
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
+<?php write_message($_GET["topic_id"], $_GET["topic_title"], $_SESSION["id"] );?>
+
+
 <?php else : ?>
 
 <p>Please connect to see content...</p>
