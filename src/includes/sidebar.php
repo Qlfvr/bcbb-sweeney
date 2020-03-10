@@ -21,7 +21,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link bg-primary text-white" href="#">Profile</a>
+            <a class="nav-link bg-primary text-white" href="/profil.php">Profile</a>
         </li>
 
 
