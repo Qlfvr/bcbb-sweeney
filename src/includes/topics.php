@@ -65,6 +65,7 @@ $req_last_message = $bdd->prepare('SELECT * from messages WHERE topics_id =? ORD
             <option value="4">Events</option>
         </select>
     </div>
+
     <input type="hidden" name="date" value="<?php echo$now = date('Y-m-d H:i:s'); ?>" />
     <input type="hidden" name="user_id" value="<?php echo $_SESSION["id"] ?>" /> <!-- Change to make dynamic-->
     <button type="submit" class="btn btn-primary">Submit</button>
