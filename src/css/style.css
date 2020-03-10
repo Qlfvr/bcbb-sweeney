@@ -7139,7 +7139,7 @@ a.text-dark:hover, a.text-dark:focus {
     border-color: #dee2e6; } }
 
 #sidebar {
-  width: 20rem;
+  width: 13rem;
   min-height: 100vh;
   background-color: #007bff; }
 
@@ -7173,6 +7173,3 @@ body {
   height: 48px;
   width: 48px;
   border-radius: 100%; }
-
-.card-message:nth-of-type(odd)-body {
-  flex-direction: row-reverse; }
