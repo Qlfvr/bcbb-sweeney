@@ -16,10 +16,11 @@ die('Erreur : '.$e->getMessage());
 // create topic into database
 
 if (isset($_POST["topic_title"],$_POST["date"],$_POST["board_id"],$_POST["user_id"])) {
-    $create_topic = $bdd->prepare('INSERT INTO topics(title, creation_date, boards_id, users_id)
-    VALUES(:title, :creation_date, :boards_id, :users_id)');
+    $create_topic = $bdd->prepare('INSERT INTO topics(title, content, creation_date, boards_id, users_id)
+    VALUES(:title,:content, :creation_date, :boards_id, :users_id)');
     $create_topic->execute(array(
         'title' => $_POST["topic_title"],
+        'content' => $_POST["topic_content"],
         'creation_date' => $_POST["date"],
         'boards_id' => $_POST["board_id"],
         'users_id' => $_POST["user_id"]
@@ -57,24 +58,31 @@ $req_board_details->execute(array($_GET["board_id"]));
     <button type="button" class="btn btn-success" data-toggle="collapse" data-target="#topicForm" aria-expanded="false"
         aria-controls="topicForm">New Topic</button>
 </div>
-<form id="topicForm" class="mb-2 collapse" action="index.php?board_id=<?php echo$_GET["board_id"]?>" method="post">
+
+
+<!-- FORMULAIRE DE CREATION DE TOPICS -->
+
+
+<form id="topicForm" class="mb-2 mt-4 collapse" action="index.php?board_id=<?php echo$_GET["board_id"]?>" method="post">
     <div class="form-group">
         <label for="topicTitle">Topic Title</label>
-        <input type="text" class="form-control" id="topicTitle" name="topic_title">
+        <input type="text" class="form-control" id="topicTitle" name="topic_title" required>
         <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+        <br>
+        <label for="topic-content">Your message</label><br>
+        <textarea name="topic_content" id="topic-content" required></textarea>
+
+
     </div>
+
+
+
 
     <input type="hidden" name="board_id" value="<?php echo $_GET["board_id"] ?>" />
     <input type="hidden" name="date" value="<?php echo$now = date('Y-m-d H:i:s'); ?>" />
     <input type="hidden" name="user_id" value="<?php echo $_SESSION["id"] ?>" /> <!-- Change to make dynamic-->
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
-
-
-
-<?php else : ?>
-
-<p>Please connect to see content...</p>
 
 
 <?php endif; ?>
@@ -101,16 +109,25 @@ $req_board_details->execute(array($_GET["board_id"]));
                         <?php echo $topics["title"]; ?>
                     </a>
                 </h3>
+
+                <?php $req_last_message->execute(array($topics["id"])); 
+
+                if ($last_message = $req_last_message->fetch()): ?>
+
                 <p class="text-muted">
 
-                    <?php $req_last_message->execute(array($topics["id"])); 
+                    <?php echo$last_message["content"]; ?>
 
-                    while ($last_message = $req_last_message->fetch()){
-                                        
-                    echo$last_message["content"];
-
-                    } ?>
                 </p>
+
+                <?php  else :
+
+                    echo '<p class="text-muted">'.$topics["content"].'</p>'; //affiche le message initial de topic
+
+                endif;?>
+
+
+
             </div>
 
             <div class="col-2 border-left p-3 d-flex justify-content-center">
@@ -118,14 +135,7 @@ $req_board_details->execute(array($_GET["board_id"]));
             </div>
         </div>
     </div>
-    <!-- <div class="card-footer d-flex flex-row-reverse">
 
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#QuickAnsModal">
-            Quick Answer </button>
-
-        <?php //echo $donnees["id"]?>
-
-    </div> -->
 </div>
 
 

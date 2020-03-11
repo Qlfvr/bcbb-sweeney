@@ -32,7 +32,19 @@ messages.users_id = users.id WHERE topics_id =? ORDER BY creation_date ASC'
 
 );
 $req_messages->execute(array($_GET["topic_id"]));
+
+
+
+//Recuperer le titre du topic et son contenu
+$req_topics = $bdd->prepare('SELECT topics.*, users.nickname AS nickname, users.email AS email FROM
+topics INNER JOIN users ON topics.users_id = users.id WHERE topics.id =?');
+
+$req_topics->execute(array($_GET["topic_id"]));
+
+
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -49,50 +61,73 @@ $req_messages->execute(array($_GET["topic_id"]));
     <div class="wrapper">
         <?php include "includes/sidebar.php";?>
         <div class="content">
+
+            <?php while ($topics = $req_topics->fetch()) : ?>
+
+            <div class="card card-message">
+                <div class="card-header">
+                    <h2>Topic : <?php echo $_GET["topic_title"]; ?></h2>
+
+                </div>
+                <div class="card-body p-2 card-message-body d-flex">
+                    <div class="pr-2 text-center border-right">
+                        <img class="profile-pic m-auto" src="<?php echo get_gravatar($topics["email"])?>" alt=""> <br>
+                        <span class="text-muted"><?php echo $topics["nickname"]?></span>
+                    </div>
+                    <div class="pl-3 pr-3">
+                        <?php
+                    echo $topics["content"];?>
+
+
+                    </div>
+                </div>
+                <!-- <div class="card-footer card-message-footer">
+                    <i class="fas fa-edit text-primary"></i>&nbsp;
+                    <i class="fas fa-trash-alt text-danger"></i>
+                    <div class="float-right text-muted">
+                        <?php// echo$topics["creation_date"] ?>
+                    </div>
+                </div> -->
+            </div>
+            <?php  endwhile;?>
+
+
+
+            <!-- LES messages -->
+
+
             <div class="card mb-2 mt-2">
                 <div class="card-header">
-                    <h2><?php echo $_GET["topic_title"] ?></h2>
+                    <h3>Answers :</h3>
+
                 </div>
                 <div class="card-body">
+
+                    <!-- Show messages -->
                     <?php while ($messages = $req_messages->fetch()) : ?>
-
                     <div class="card card-message m-3">
-
-
                         <div class="card-body p-2 card-message-body bg-light-gray d-flex">
-
-
                             <div class="pr-2 text-center border-right">
-
                                 <img class="profile-pic m-auto" src="<?php echo get_gravatar($messages["email"])?>"
                                     alt=""> <br>
                                 <span class="text-muted"><?php echo $messages["nickname"]?></span>
-
                             </div>
-
                             <div class="pl-3 pr-3">
                                 <?php echo$messages["content"]."<br>"; ?>
-
                             </div>
-
-
                         </div>
                         <div class="card-footer card-message-footer">
-
                             <i class="fas fa-edit text-primary"></i>&nbsp;
                             <i class="fas fa-trash-alt text-danger"></i>
-
                             <div class="float-right text-muted">
                                 <?php echo$messages["creation_date"] ?>
                             </div>
-
-
-
                         </div>
                     </div>
-                    <?php endwhile ;
+                    <?php endwhile ; ?>
+                    <!-- Show messages -->
 
-                   write_message($_GET["topic_id"], $_GET["topic_title"], $_SESSION["id"] );?>
+                    <?php write_message($_GET["topic_id"], $_GET["topic_title"], $_SESSION["id"] );?>
                 </div>
             </div>
         </div>
