@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://kit.fontawesome.com/a990d1fe00.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="/css/style.css" />
-  <title>Document</title>
+  <title>Sweeney</title>
 </head>
 
 <body>
