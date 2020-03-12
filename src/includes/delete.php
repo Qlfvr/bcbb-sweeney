@@ -1,5 +1,5 @@
  <?php
- session_start(); 
+//  session_start(); 
  try
  {
  // On se connecte à MySQL
@@ -22,5 +22,22 @@ if ($_GET["action"] == "deleteusers") {
     //header("location:/login.php");
     echo '<meta http-equiv="refresh" content="1;URL=login.php">'; 
 }
+
+
+if ($_GET["action"] == "delete_message") {
+
+    echo "test";
+    echo $_GET["action"];
+    echo $_GET["message_id"];
+
+$query = 'UPDATE messages SET deleted = 1  WHERE id =? ';
+$delete_message = $bdd->prepare($query);
+$delete_message->execute(array($_GET["message_id"]));
+    echo '<meta http-equiv="refresh" content="1;URL=../messages.php?topic_id='.$_GET["topic_id"].'">';
+
+
+
+}
+
 
 ?>

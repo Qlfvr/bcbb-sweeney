@@ -153,8 +153,9 @@ $req_topics->execute(array($_GET["topic_id"]));
                         <div class="card-footer card-message-footer">
                             <i id="deleter" class="fas fa-edit text-primary"></i>&nbsp;
                             <!-- <a href="" onclick="delete_message_ajax()"><i class="fas fa-trash-alt text-danger"></i></a> -->
-                            <a href="?action=delete&message_id=<?php echo $messages["id"]?>"><i
-                                    class="fas fa-trash-alt text-danger"></i></a>
+                            <a
+                                href="/includes/delete.php?action=delete_message&message_id=<?php echo $messages["id"];?>&topic_id=<?php echo $_GET["topic_id"];?>">
+                                <i class="fas fa-trash-alt text-danger"></i></a>
 
                             <div class="float-right text-muted">
                                 <?php echo$messages["creation_date"] ?>
