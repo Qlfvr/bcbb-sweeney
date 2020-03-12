@@ -57,6 +57,24 @@ $req_topics->execute(array($_GET["topic_id"]));
 </head>
 
 <body>
+
+    <script>
+        function delete_message_ajax() {
+
+            $.ajax({
+                url: 'ajax.php', // La ressource ciblée
+                type: 'POST', // Le type de la requête HTTP.
+                data: {
+                    action: 'delete_message'
+                },
+                success: function (code_html, statut) { // code_html contient le HTML renvoyé
+                }
+
+            });
+
+        };
+    </script>
+
     <?php include "includes/topmenu.php";?>
     <div class="wrapper">
         <?php include "includes/sidebar.php";?>
@@ -81,13 +99,13 @@ $req_topics->execute(array($_GET["topic_id"]));
 
                     </div>
                 </div>
-                <!-- <div class="card-footer card-message-footer">
+                <div class="card-footer card-message-footer">
                     <i class="fas fa-edit text-primary"></i>&nbsp;
                     <i class="fas fa-trash-alt text-danger"></i>
                     <div class="float-right text-muted">
-                        <?php// echo$topics["creation_date"] ?>
+                        <?php echo$topics["creation_date"] ?>
                     </div>
-                </div> -->
+                </div>
             </div>
             <?php  endwhile;?>
 
@@ -105,7 +123,7 @@ $req_topics->execute(array($_GET["topic_id"]));
 
                     <!-- Show messages -->
                     <?php while ($messages = $req_messages->fetch()) : ?>
-                    <div class="card card-message m-3">
+                    <div class="card card-message">
                         <div class="card-body p-2 card-message-body bg-light-gray d-flex">
                             <div class="pr-2 text-center border-right">
                                 <img class="profile-pic m-auto" src="<?php echo get_gravatar($messages["email"])?>"
@@ -113,12 +131,25 @@ $req_topics->execute(array($_GET["topic_id"]));
                                 <span class="text-muted"><?php echo $messages["nickname"]?></span>
                             </div>
                             <div class="pl-3 pr-3">
-                                <?php echo$messages["content"]."<br>"; ?>
+
+
+
+                                <?php 
+
+                                if ($messages["deleted"] == 0) {
+                                    echo$messages["content"]."<br>"; 
+                                }
+
+                                else {
+                                    echo '<i class="text-muted">This message has been deleted</i>';
+                                }
+                                ?>
+
                             </div>
                         </div>
                         <div class="card-footer card-message-footer">
-                            <i class="fas fa-edit text-primary"></i>&nbsp;
-                            <i class="fas fa-trash-alt text-danger"></i>
+                            <i id="deleter" class="fas fa-edit text-primary"></i>&nbsp;
+                            <a href="" onclick="delete_message_ajax()"><i class="fas fa-trash-alt text-danger"></i></a>
                             <div class="float-right text-muted">
                                 <?php echo$messages["creation_date"] ?>
                             </div>
@@ -134,6 +165,8 @@ $req_topics->execute(array($_GET["topic_id"]));
     </div>
     <script src="/js/jquery.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
+
+
 </body>
 
 </html>
