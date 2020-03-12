@@ -8,6 +8,10 @@ session_start();
 }
 
 // Ajout User
+
+
+
+
 $new_user = $bdd->prepare('INSERT INTO users (nickname, email, password) VALUES (:nickname, :email, :password)');
 if(isset($_POST['submit_sign_up'])){ // Si il y a envoie du formulaire valide, execute l'ajout des champs dans la BDD
     $new_user->execute(array(
@@ -16,9 +20,25 @@ if(isset($_POST['submit_sign_up'])){ // Si il y a envoie du formulaire valide, e
         'password' => htmlspecialchars(password_hash($_POST['password'], PASSWORD_DEFAULT))
        ));
     //    echo 'Welcome, new user';
-    header("Location: index.php");
-       
-   }
+    //header("Location: index.php");
+}
+
+// if($new_user->errorCode() == '00000')
+//         {
+//         $id = $bdd->lastInsertId();
+//         $_SESSION['id']=$id;
+//         // Redirection du visiteur vers la page suivante
+//         header("location:index.php");
+//         }
+//     else
+//         {
+//            // header("location:index.php");
+//             echo '<div class="mx-auto">Cet email est deja inscrit !</div>';
+//         }
+
+
+
+
 
 // Récup du user et de son password pour Sign in
 $nickname = htmlspecialchars($_POST['nickname']);
@@ -48,6 +68,9 @@ if(isset($_POST['submit_sign_in'])){
     }
 
 }
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -61,53 +84,6 @@ if(isset($_POST['submit_sign_in'])){
 </head>
 
 <body>
-
-    <!-- Sign Up 
- 
-    <form method="post" action="login.php">
-        <p>Create an account :</p>
-        <input type="text" name="nickname" id="nickname" placeholder="Nickname" required /><br />
-        <input type="email" name="email" id="email" placeholder="E-mail" required /><br />
-        <input type="password" name="password" id="password" placeholder="Password" required /><br />
-        <input type="submit" name="submit_sign_up" id="submit_sign_up" value="Sign up" />
-    </form>
--->
-    <form method="post" action="login.php">
-        <div class="form-group">
-            <label for="exampleInputNickname1">Nickname</label>
-            <input type="text" name="nickname" class="form-control" id="exampleNickname1" placeholder="Nickname" required>
-        </div>
-        <div class="form-group">
-            <label for="exampleInputEmail1">Email address</label>
-            <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="E-mail" required>
-        </div>
-        <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
-            <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
-        </div>
-        <button type="submit" name="submit_sign_up" id="submit_sign_up" class="btn btn-primary">Sign up</button>
-    </form>
-
-    <!-- Sign In 
-
-    <form method="post" action="login.php">
-        <p>Connection :</p>
-        <input type="text" name="nickname" id="nickname" placeholder="Nickname" required /><br />
-        <input type="password" name="password" id="password" placeholder="Password" required /><br />
-        <input type="submit" name="submit_sign_in" id="submit_sign_in" value="Sign in" />
-    </form>
--->
-    <form method="post" action="login.php">
-        <div class="form-group">
-            <label for="exampleInputNickname1">Nickname</label>
-            <input type="text" name="nickname" class="form-control" id="exampleNickname1" placeholder="Nickname" required>
-        </div>
-        <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
-            <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
-        </div>
-        <button type="submit" name="submit_sign_in" id="submit_sign_in" class="btn btn-primary">Sign in</button>
-    </form>    
 
 </body>
 

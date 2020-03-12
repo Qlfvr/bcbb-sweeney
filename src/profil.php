@@ -94,8 +94,8 @@ $req_info->execute(array($_SESSION["id"]));
             <?php  while($users_modif = $req_modif->fetch()): ?>
                 <ul class="nav nav-tabs">
                 
-                    <button  class="btn btn-success ml-1" type="submit" id="modif" name="update"><a href="?table=users&action=update&id=<?php echo $users_modif["id"];?>">Modify</a></button>
-                    <button  class="btn btn-danger ml-3" type="submit" id="delete" name="delete"><a href="?table=users&action=delete&id=<?php echo $users_modif["id"];?>">delete</a></button>
+                    <button  class="btn btn-success ml-1" type="submit" id="modif" name="update"><a href="?table=users&action=updateusers&id=<?php echo $users_modif["id"];?>">Modify</a></button>
+                    <button  class="btn btn-danger ml-3" type="submit" id="delete" name="delete"><a href="?table=users&action=deleteusers&id=<?php echo $users_modif["id"];?>">delete</a></button>
                          
                 </ul>
                 <?php endwhile ?>
