@@ -58,14 +58,17 @@ $req_topics->execute(array($_GET["topic_id"]));
 
 <body>
 
-    <script>
-        function delete_message_ajax() {
+    <!-- <script>
+        function delete_message_ajax($bdd, $message_id) {
 
             $.ajax({
                 url: 'ajax.php', // La ressource ciblée
                 type: 'POST', // Le type de la requête HTTP.
                 data: {
-                    action: 'delete_message'
+                    action: 'delete_message',
+                    message_id: $message_id,
+                    bdd: $bdd
+
                 },
                 success: function (code_html, statut) { // code_html contient le HTML renvoyé
                 }
@@ -73,7 +76,7 @@ $req_topics->execute(array($_GET["topic_id"]));
             });
 
         };
-    </script>
+    </script> -->
 
     <?php include "includes/topmenu.php";?>
     <div class="wrapper">
@@ -149,7 +152,10 @@ $req_topics->execute(array($_GET["topic_id"]));
                         </div>
                         <div class="card-footer card-message-footer">
                             <i id="deleter" class="fas fa-edit text-primary"></i>&nbsp;
-                            <a href="" onclick="delete_message_ajax()"><i class="fas fa-trash-alt text-danger"></i></a>
+                            <!-- <a href="" onclick="delete_message_ajax()"><i class="fas fa-trash-alt text-danger"></i></a> -->
+                            <a href="?action=delete&message_id=<?php echo $messages["id"]?>"><i
+                                    class="fas fa-trash-alt text-danger"></i></a>
+
                             <div class="float-right text-muted">
                                 <?php echo$messages["creation_date"] ?>
                             </div>
