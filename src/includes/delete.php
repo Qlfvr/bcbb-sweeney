@@ -14,7 +14,7 @@
  //Delete 
 
 
-if ($action = "delete") {
+if ($_GET["action"] == "delete") {
 
     $request = 'DELETE FROM `users` WHERE `id` = :id';
     $delete = $bdd->prepare($request);
