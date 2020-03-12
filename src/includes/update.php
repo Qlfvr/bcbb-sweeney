@@ -14,7 +14,7 @@ die('Erreur : '.$e->getMessage());
              
 // Update autre
 
-if ($_GET["action"] == "update") {
+if ($_GET["action"] == "updateusers") {
    
     $nickname = filter_input(INPUT_POST, "nickname", FILTER_SANITIZE_STRING);
     $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_STRING);
