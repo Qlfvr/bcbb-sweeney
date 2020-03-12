@@ -13,30 +13,13 @@
 
 <body>
 
-  <?php 
-include "includes/topmenu.php";
-?>
+  <?php include "includes/topmenu.php";?>
   <div class="wrapper">
-
     <?php include "includes/sidebar.php";?>
-
-
     <div class="content">
-
-
-
-
-
       <?php include "includes/topics.php";?>
-
-
     </div>
-
   </div>
-
-
-
-
   <script src="/js/jquery.min.js"></script>
   <script src="/js/bootstrap.min.js"></script>
 </body>

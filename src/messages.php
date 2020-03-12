@@ -1,5 +1,7 @@
 <?php
 session_start();
+ include "includes/functions.php";
+
 //Data base connexion with PDO
 try
 {
@@ -11,21 +13,38 @@ catch(Exception $e)
 // En cas d'erreur, on affiche un message et on arrête tout
 die('Erreur : '.$e->getMessage());
 }
-// REQUEST for writing message
-if (isset($_POST["message_content"],$_POST["date"],$_POST["topic_id"],$_POST["user_id"])) {
-$create_message = $bdd->prepare('INSERT INTO messages(content, creation_date, topics_id, users_id)
-VALUES(:content, :creation_date, :topics_id, :users_id)');
-$create_message->execute(array(
-'content' => $_POST["message_content"],
-'creation_date' => $_POST["date"],
-'topics_id' => $_POST["topic_id"],
-'users_id' => $_POST["user_id"]
-));
-}
+// // REQUEST for writing message
+// if (isset($_POST["message_content"],$_POST["date"],$_POST["topic_id"],$_POST["user_id"])) {
+// $create_message = $bdd->prepare('INSERT INTO messages(content, creation_date, topics_id, users_id)
+// VALUES(:content, :creation_date, :topics_id, :users_id)');
+// $create_message->execute(array(
+// 'content' => $_POST["message_content"],
+// 'creation_date' => $_POST["date"],
+// 'topics_id' => $_POST["topic_id"],
+// 'users_id' => $_POST["user_id"]
+// ));
+// }
 //PREPARE REQUEST TO SHOW MESSAGES
-    $req_messages = $bdd->prepare('SELECT * FROM messages WHERE topics_id =? ORDER BY creation_date ASC');
-    $req_messages->execute(array($_GET["topic_id"]));
+// $req_messages = $bdd->prepare('SELECT * FROM messages WHERE topics_id =? ORDER BY creation_date ASC');
+$req_messages = $bdd->prepare(
+'SELECT messages.*, users.nickname AS nickname, users.email AS email from messages INNER JOIN users ON
+messages.users_id = users.id WHERE topics_id =? ORDER BY creation_date ASC'
+
+);
+$req_messages->execute(array($_GET["topic_id"]));
+
+
+
+//Recuperer le titre du topic et son contenu
+$req_topics = $bdd->prepare('SELECT topics.*, users.nickname AS nickname, users.email AS email FROM
+topics INNER JOIN users ON topics.users_id = users.id WHERE topics.id =?');
+
+$req_topics->execute(array($_GET["topic_id"]));
+
+
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,45 +57,116 @@ $create_message->execute(array(
 </head>
 
 <body>
+
+    <script>
+        function delete_message_ajax() {
+
+            $.ajax({
+                url: 'ajax.php', // La ressource ciblée
+                type: 'POST', // Le type de la requête HTTP.
+                data: {
+                    action: 'delete_message'
+                },
+                success: function (code_html, statut) { // code_html contient le HTML renvoyé
+                }
+
+            });
+
+        };
+    </script>
+
     <?php include "includes/topmenu.php";?>
     <div class="wrapper">
         <?php include "includes/sidebar.php";?>
         <div class="content">
+
+            <?php while ($topics = $req_topics->fetch()) : ?>
+
+            <div class="card card-message">
+                <div class="card-header">
+                    <h2>Topic : <?php echo $_GET["topic_title"]; ?></h2>
+
+                </div>
+                <div class="card-body p-2 card-message-body d-flex">
+                    <div class="pr-2 text-center border-right">
+                        <img class="profile-pic m-auto" src="<?php echo get_gravatar($topics["email"])?>" alt=""> <br>
+                        <span class="text-muted"><?php echo $topics["nickname"]?></span>
+                    </div>
+                    <div class="pl-3 pr-3">
+                        <?php
+                    echo $topics["content"];?>
+
+
+                    </div>
+                </div>
+                <div class="card-footer card-message-footer">
+                    <i class="fas fa-edit text-primary"></i>&nbsp;
+                    <i class="fas fa-trash-alt text-danger"></i>
+                    <div class="float-right text-muted">
+                        <?php echo$topics["creation_date"] ?>
+                    </div>
+                </div>
+            </div>
+            <?php  endwhile;?>
+
+
+
+            <!-- LES messages -->
+
+
             <div class="card mb-2 mt-2">
                 <div class="card-header">
-                    <h2><?php echo $_GET["topic_title"] ?></h2>
+                    <h3>Answers :</h3>
+
                 </div>
                 <div class="card-body">
+
+                    <!-- Show messages -->
                     <?php while ($messages = $req_messages->fetch()) : ?>
-                    <div class="card m-3">
-                        <div class="card-body bg-light-gray">
-                            <?php echo$messages["content"]."<br>"; ?>
-                            <?php // echo$messages["signature"]."<br>"; ?>
+                    <div class="card card-message">
+                        <div class="card-body p-2 card-message-body bg-light-gray d-flex">
+                            <div class="pr-2 text-center border-right">
+                                <img class="profile-pic m-auto" src="<?php echo get_gravatar($messages["email"])?>"
+                                    alt=""> <br>
+                                <span class="text-muted"><?php echo $messages["nickname"]?></span>
+                            </div>
+                            <div class="pl-3 pr-3">
+
+
+
+                                <?php 
+
+                                if ($messages["deleted"] == 0) {
+                                    echo$messages["content"]."<br>"; 
+                                }
+
+                                else {
+                                    echo '<i class="text-muted">This message has been deleted</i>';
+                                }
+                                ?>
+
+                            </div>
+                        </div>
+                        <div class="card-footer card-message-footer">
+                            <i id="deleter" class="fas fa-edit text-primary"></i>&nbsp;
+                            <a href="" onclick="delete_message_ajax()"><i class="fas fa-trash-alt text-danger"></i></a>
+                            <div class="float-right text-muted">
+                                <?php echo$messages["creation_date"] ?>
+                            </div>
                         </div>
                     </div>
-                    <?php endwhile ?>
+                    <?php endwhile ; ?>
+                    <!-- Show messages -->
 
-                    <div class="card m-3">
-                        <form
-                            action="messages.php?topic_id=<?php echo$_GET["topic_id"]."&topic_title=".$_GET["topic_title"] ?>"
-                            method="post">
-                            <textarea name="message_content" class="write-message p-2"
-                                placeholder="Type your message here..."></textarea>
-                            <div class="card-footer d-flex flex-row-reverse">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
-                            <input type="hidden" name="date" value="<?php echo$now = date('Y-m-d H:i:s'); ?>" />
-                            <input type="hidden" name="user_id" value="1" /> <!-- change to make dynamic -->
-                            <input type="hidden" name="topic_id" value="<?php echo $_GET["topic_id"] ?>" />
-                            <!-- get the $_GET[topic_id] and pass it to add message adlgorithm with POST -->
-                        </form>
-                    </div>
+                    <?php write_message($_GET["topic_id"], $_GET["topic_title"], $_SESSION["id"] );?>
                 </div>
             </div>
         </div>
     </div>
     <script src="/js/jquery.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
+
+
 </body>
 
 </html>
