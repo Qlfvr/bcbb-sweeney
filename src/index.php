@@ -1,29 +1,4 @@
 <?php session_start(); ?>
-<?php
-
-//Data base connexion with PDO
-try
-{
-// On se connecte à MySQL
-$bdd = new PDO('mysql:host=mysql;dbname=bcbb;charset=utf8', 'root', 'root');
-}
-catch(Exception $e)
-{
-// En cas d'erreur, on affiche un message et on arrête tout
-die('Erreur : '.$e->getMessage());
-}
-
-
-$request = $bdd->prepare('SELECT * FROM boards ORDER BY id ASC');
-$request->execute(array());
-
-?>
-
-
-
-
-
-
 <?php include "includes/functions.php";?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,26 +14,26 @@ $request->execute(array());
 <body>
 
   <?php include "includes/topmenu.php";?>
+
   <div class="wrapper">
     <?php include "includes/sidebar.php";?>
     <div class="content">
-      <div class="container">
+
+      <?php if (empty($_GET)) : ?>
+      <div class="container-fluid">
         <div class="row">
           <?php while ($boards = $request->fetch()) : ?>
           <div class="col-3">
             <div class="card">
               <div class="card-body">
+                <h2><?php echo $boards["name"] ?></h2>
               </div>
             </div>
           </div>
           <?php endwhile?>
         </div>
       </div>
-
-
-
-
-
+      <?php endif ?>
 
 
 

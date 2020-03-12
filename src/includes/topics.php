@@ -1,22 +1,36 @@
-<?php // create topic into database
+<?php
 
-if (isset($_POST["topic_title"],$_POST["date"],$_POST["board_id"],$_POST["user_id"])) {
-$create_topic = $bdd->prepare('INSERT INTO topics(title, content, creation_date, boards_id, users_id)
-VALUES(:title,:content, :creation_date, :boards_id, :users_id)');
-$create_topic->execute(array(
-'title' => $_POST["topic_title"],
-'content' => $_POST["topic_content"],
-'creation_date' => $_POST["date"],
-'boards_id' => $_POST["board_id"],
-'users_id' => $_POST["user_id"]
-));
+//Data base connexion with PDO
+try
+{
+// On se connecte à MySQL
+$bdd = new PDO('mysql:host=mysql;dbname=bcbb;charset=utf8', 'root', 'root');
+}
+catch(Exception $e)
+{
+// En cas d'erreur, on affiche un message et on arrête tout
+die('Erreur : '.$e->getMessage());
 }
 
-// SHOW TOPICS REQUEST
+
+// create topic into database
+
+if (isset($_POST["topic_title"],$_POST["date"],$_POST["board_id"],$_POST["user_id"])) {
+    $create_topic = $bdd->prepare('INSERT INTO topics(title, content, creation_date, boards_id, users_id)
+    VALUES(:title,:content, :creation_date, :boards_id, :users_id)');
+    $create_topic->execute(array(
+        'title' => $_POST["topic_title"],
+        'content' => $_POST["topic_content"],
+        'creation_date' => $_POST["date"],
+        'boards_id' => $_POST["board_id"],
+        'users_id' => $_POST["user_id"]
+    ));
+}
+
+// SHOW TOPICS REQUEST 
 
 $req_topics = $bdd->prepare(
-'SELECT topics.*, users.nickname AS creator_nickname, users.email AS creator_email from topics INNER JOIN users ON
-topics.users_id = users.id WHERE boards_id =? ORDER BY creation_date DESC'
+'SELECT topics.*, users.nickname AS creator_nickname, users.email AS creator_email from topics INNER JOIN users ON topics.users_id = users.id WHERE boards_id =? ORDER BY creation_date DESC'
 
 );
 $req_topics->execute(array($_GET["board_id"]));
@@ -39,7 +53,7 @@ $req_board_details->execute(array($_GET["board_id"]));
 
 <?php endwhile ?>
 
-<?php if (!empty($_SESSION) && !empty($_GET)): ?>
+<?php if (!empty($_SESSION)): ?>
 <div class="d-flex flex-row">
     <button type="button" class="btn btn-success" data-toggle="collapse" data-target="#topicForm" aria-expanded="false"
         aria-controls="topicForm">New Topic</button>
