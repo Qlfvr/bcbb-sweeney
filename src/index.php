@@ -38,9 +38,6 @@
 
 
       <?php include "includes/topics.php";?>
-
-
-
     </div>
   </div>
   <script src="/js/jquery.min.js"></script>
