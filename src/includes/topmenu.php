@@ -1,3 +1,44 @@
+<?php
+                        
+                        // if($new_user->errorCode() == '00000')
+                        //     {
+                        //     $id = $bdd->lastInsertId();
+                        //     $_SESSION['id']=$id;
+                        //     // Redirection du visiteur vers la page suivante
+                        //     header("location:index.php");
+                        //     }
+                        // else
+                        //     {
+                        //     // header("location:index.php");
+                        //         echo '<div class="mx-auto">this email is already registered, change email !</div>';
+                        //     }
+                                
+                        try {
+
+                            $bdd = new PDO('mysql:host=mysql;dbname=bcbb;charset=utf8', 'root', 'root');
+
+                        } catch (Exception $e) {
+
+                            die('Error : ' . $e->getMessage());
+                            
+                        }
+
+                      
+
+                        $reqmail = $bdd->prepare("SELECT * FROM users WHERE email = ?");
+                        $reqmail->execute(array($email));
+                        $mailexist = $reqmail->rowcount();
+                        if ($mailexist == 0){
+
+                            echo '<meta http-equiv="refresh" content="1;URL=index.php">';
+
+                        } else {
+	                      $erreur = "Le email que vous avez introduit est déja utilisé !" ;
+	                    }                     
+                       
+                   
+
+                        ?>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <a href="/" class="navbar-brand">Sweeney</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar7">
@@ -58,8 +99,6 @@
                             <label for="exampleInputPassword1">Password</label>
                             <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
                         </div>
-                    
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -82,7 +121,7 @@
                 </div>
                 <div class="modal-body">
                 <!-- Form Sign up -->
-                    <form method="post" action="login.php">
+                    <form method="post" action="">
                         <div class="form-group">
                             <label for="exampleInputNickname1">Nickname</label>
                             <input type="text" name="nickname" class="form-control" id="exampleNickname1" placeholder="Nickname" required>
@@ -90,6 +129,7 @@
                         <div class="form-group">
                             <label for="exampleInputEmail1">Email address</label>
                             <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="E-mail" required>
+                                                
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Password</label>
