@@ -13,7 +13,12 @@
 </head>
 
 <body>
+    <?php
+    include("includes/Parsedown.php");
 
+    $parsedown = new Parsedown();
+    echo $parsedown->text("#Hello _word_ !");
+    ?>
     <?php 
 include "includes/topmenu.php";
 ?>

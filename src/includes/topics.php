@@ -16,6 +16,10 @@ die('Erreur : '.$e->getMessage());
 // Emoticons
 include("includes/emoticon.php");
 
+// Markdown
+include("includes/Parsedown.php");
+$parsedown = new Parsedown();
+
 // create topic into database
 
 if (isset($_POST["topic_title"],$_POST["date"],$_POST["board_id"],$_POST["user_id"])) {
@@ -120,9 +124,12 @@ $req_board_details->execute(array($_GET["board_id"]));
                 <p class="text-muted">
 
                     <?php 
-                //Affichage smileys
+                            //Affichage smileys
                             $content = smileys($last_message["content"]);
-                            echo $content;
+                            // echo $content;
+
+                            //Affichage markdown
+                            echo $parsedown->text($content);
                     ?>
 
                 </p>

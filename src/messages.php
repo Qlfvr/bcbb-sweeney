@@ -27,6 +27,10 @@ $req_topics->execute(array($_GET["topic_id"]));
 // Emoticons
 include("includes/emoticon.php");
 
+// Markdown
+include("includes/Parsedown.php");
+$parsedown = new Parsedown();
+
 ?>
 
 
@@ -114,7 +118,10 @@ include("includes/emoticon.php");
 
                                     //Affichage smileys
                                     $content = smileys($messages["content"]);
-                                    echo $content;
+                                    // echo $content;
+
+                                    //Affichage markdown
+                                    echo $parsedown->text($content);
 
 
 
