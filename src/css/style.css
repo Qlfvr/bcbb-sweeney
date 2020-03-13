@@ -7216,3 +7216,7 @@ body {
   font: inherit;
   cursor: pointer;
   outline: inherit; }
+
+.resize-emoticon {
+  height: 16px;
+  width: 16px; }

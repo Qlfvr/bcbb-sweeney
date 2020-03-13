@@ -23,6 +23,10 @@ $req_messages->execute(array($_GET["topic_id"]));
 $req_topics = $bdd->prepare('SELECT topics.*, users.nickname AS nickname, users.email AS email FROM
 topics INNER JOIN users ON topics.users_id = users.id WHERE topics.id =?');
 $req_topics->execute(array($_GET["topic_id"]));
+
+// Emoticons
+include("includes/emoticon.php");
+
 ?>
 
 
@@ -107,7 +111,13 @@ $req_topics->execute(array($_GET["topic_id"]));
                             <div class="pl-3 pr-3">
                                 <?php 
                                 if ($messages["deleted"] == 0) {
-                                    echo$messages["content"]."<br>"; 
+
+                                    //Affichage smileys
+                                    $content = smileys($messages["content"]);
+                                    echo $content;
+
+
+
                                 }
                                 else {
                                     echo '<i class="text-muted">This message has been deleted</i>';
