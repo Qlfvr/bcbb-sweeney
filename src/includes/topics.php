@@ -13,6 +13,12 @@ catch(Exception $e)
 die('Erreur : '.$e->getMessage());
 }
 
+// Emoticons
+include("includes/emoticon.php");
+
+// Markdown
+include("includes/Parsedown.php");
+$parsedown = new Parsedown();
 
 // create topic into database
 
@@ -110,14 +116,21 @@ $req_board_details->execute(array($_GET["board_id"]));
                         <?php echo $topics["title"]; ?>
                     </a>
                 </h3>
-
+<!-- request last message -->
                 <?php $req_last_message->execute(array($topics["id"])); 
 
                 if ($last_message = $req_last_message->fetch()): ?>
 
                 <p class="text-muted">
 
-                    <?php echo$last_message["content"]; ?>
+                    <?php 
+                            //Affichage smileys
+                            $content = smileys($last_message["content"]);
+                            // echo $content;
+
+                            //Affichage markdown
+                            echo $parsedown->text($content);
+                    ?>
 
                 </p>
 
