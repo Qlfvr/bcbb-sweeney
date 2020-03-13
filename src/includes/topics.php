@@ -117,7 +117,7 @@ $req_board_details->execute(array($_GET["board_id"]));
                         <?php echo $topics["title"]; ?>
                     </a>
                 </h3>
-<!-- request last message -->
+                <!-- request last message -->
                 <?php $req_last_message->execute(array($topics["id"])); 
 
                 if ($last_message = $req_last_message->fetch()): ?>
