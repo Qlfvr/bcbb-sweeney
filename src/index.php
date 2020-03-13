@@ -37,23 +37,30 @@ try{
       <?php 
       $req_board_details = $bdd->prepare('SELECT * from boards WHERE id =?');
       $req_board_details->execute(array($_GET["board_id"]));
-     ?>
+      if(empty($_GET)): ?>
       
-      <?php if (empty($_GET)) : ?>
       <div class="container-fluid">
         <div class="row">
-          <?php while ($boards = $request->fetch()) : ?>
+          
           <div class="col-3">
             <div class="card">
               <div class="card-body">
-                <h2><?php echo $boards["name"] ?></h2>
+              
+                <h2>
+                <?php 
+                while($boards = $req_board_details->fetch()):
+                   echo $boards["name"]; 
+                endwhile?>
+                    
+                    </h2>
               </div>
             </div>
           </div>
-          <?php endwhile?>
+          
         </div>
       </div>
       <?php endif ?>
+
 
 
       <?php include "includes/topics.php";?>
