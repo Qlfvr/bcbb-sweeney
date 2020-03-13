@@ -14,6 +14,7 @@ catch(Exception $e)
 // En cas d'erreur, on affiche un message et on arrête tout
 die('Erreur : '.$e->getMessage());
 }
+
 $req_messages = $bdd->prepare(
 'SELECT messages.*,users.signature AS signature, users.id AS users_id, users.nickname AS nickname, users.email AS email from messages INNER JOIN users ON
 messages.users_id = users.id WHERE topics_id =? ORDER BY creation_date ASC');
@@ -111,8 +112,12 @@ $parsedown = new Parsedown();
                                 <img class="profile-pic m-auto" src="<?php echo get_gravatar($messages["email"])?>"
                                     alt=""> <br>
                                 <span class="text-muted"><?php echo $messages["nickname"]?></span>
+
                             </div>
                             <div class="pl-3 pr-3">
+
+                                <p><?php echo $messages["signature"]; ?></p>
+
                                 <?php 
                                 if ($messages["deleted"] == 0) {
                                      
