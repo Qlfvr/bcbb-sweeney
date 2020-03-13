@@ -14,7 +14,6 @@
 // @import "node_modules/bootstrap/scss/grid";
 
 @import "node_modules/bootstrap/scss/bootstrap";
-
 @import "sidebar";
 @import "profil";
 
@@ -24,7 +23,6 @@ $light-gray: #e5e9f8;
   background-color: $light-gray;
 
 }
-
 
 body {
 
@@ -81,6 +79,19 @@ body {
   font: inherit;
   cursor: pointer;
   outline: inherit;
+
+
+}
+
+.button-link {
+
+  color: white;
+
+  &:hover {
+    color: white;
+    text-decoration: none;
+
+  }
 
 
 }

@@ -7216,3 +7216,9 @@ body {
   font: inherit;
   cursor: pointer;
   outline: inherit; }
+
+.button-link {
+  color: white; }
+  .button-link:hover {
+    color: white;
+    text-decoration: none; }
