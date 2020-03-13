@@ -1,5 +1,4 @@
 <?php session_start(); ?>
-
 <?php
 
 //Data base connexion with PDO
@@ -20,6 +19,11 @@ $request->execute(array());
 
 ?>
 
+
+
+
+
+
 <?php include "includes/functions.php";?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,13 +33,12 @@ $request->execute(array());
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://kit.fontawesome.com/a990d1fe00.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="/css/style.css" />
-  <title>Sweeney</title>
+  <title>Document</title>
 </head>
 
 <body>
 
   <?php include "includes/topmenu.php";?>
-
   <div class="wrapper">
     <?php include "includes/sidebar.php";?>
     <div class="content">
@@ -59,6 +62,9 @@ $request->execute(array());
 
 
       <?php include "includes/topics.php";?>
+
+
+
     </div>
   </div>
   <script src="/js/jquery.min.js"></script>
