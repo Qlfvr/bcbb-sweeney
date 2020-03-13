@@ -17,7 +17,23 @@ die('Erreur : '.$e->getMessage());
 $request = $bdd->prepare('SELECT * FROM boards ORDER BY id ASC');
 $request->execute(array());
 
-?>
+
+
+
+// $lasttopicreq = $bdd-> prepare (
+// 'SELECT title FROM topics WHERE boards_id =? LIMIT 1
+
+// INNER JOIN messages ON messages.topics_id = topics.id
+
+// ');
+
+
+
+
+// 'SELECT topics.*, users.nickname AS creator_nickname, users.email AS creator_email from topics INNER JOIN users ON
+// topics.users_id = users.id WHERE boards_id =? ORDER BY creation_date DESC'
+
+// ?>
 
 
 
@@ -37,6 +53,32 @@ $request->execute(array());
 </head>
 
 <body>
+
+
+  <?php 
+
+// $lasttopicreq->execute(array(1));
+
+
+//   while ($lasttopic = $lasttopicreq->fetch()) {
+
+
+//     echo $lasttopic["title"];
+//     echo $lasttopic["content"];
+
+
+
+
+
+
+//   } 
+
+?>
+
+
+
+
+
 
   <?php include "includes/topmenu.php";?>
   <div class="wrapper">
