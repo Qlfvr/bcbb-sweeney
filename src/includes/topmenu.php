@@ -1,40 +1,42 @@
 <?php
+
+
+// Connection à la base de donnée
+// try {
+//     $bdd = new PDO('mysql:host=mysql;dbname=bcbb;charset=utf8', 'root', 'root');
+//     $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+// } catch (Exception $e) {
+//     die('Error : ' . $e->getMessage());
+// }
+// $reqmail = $bdd->prepare("SELECT * FROM users WHERE email =s?");
+// $reqmail->execute(array($email));
+
                         
-                        // if($new_user->errorCode() == '00000')
-                        //     {
-                        //     $id = $bdd->lastInsertId();
-                        //     $_SESSION['id']=$id;
-                        //     // Redirection du visiteur vers la page suivante
-                        //     header("location:index.php");
-                        //     }
-                        // else
-                        //     {
-                        //     // header("location:index.php");
-                        //         echo '<div class="mx-auto">this email is already registered, change email !</div>';
-                        //     }
+//                         if($resultat->errorCode() == '00000')
+//                             {
+//                             $id = $bdd->lastInsertId();
+//                             $_SESSION['id']=$id;
+//                             // Redirection du visiteur vers la page suivante
+//                             header("location:index.php");
+//                             }
+//                         else
+//                             {
+//                             // header("location:index.php");
+//                                 echo '<div class="mx-auto">this email is already registered, change email !</div>';
+//                             }
+                        
                                 
-                        try {
+                    
+                        
+                        // $mailexist = $reqmail->rowcount();
+                     
+                        // if ($mailexist == 0){
 
-                            $bdd = new PDO('mysql:host=mysql;dbname=bcbb;charset=utf8', 'root', 'root');
+                        //     // echo '<meta http-equiv="refresh" content="1;URL=index.php">';
 
-                        } catch (Exception $e) {
-
-                            die('Error : ' . $e->getMessage());
-                            
-                        }
-
-                      
-
-                        $reqmail = $bdd->prepare("SELECT * FROM users WHERE email = ?");
-                        $reqmail->execute(array($email));
-                        $mailexist = $reqmail->rowcount();
-                        if ($mailexist == 0){
-
-                            // echo '<meta http-equiv="refresh" content="1;URL=index.php">';
-
-                        } else {
-	                      $erreur = "Le email que vous avez introduit est déja utilisé !" ;
-	                    }                     
+                        // } else {
+	                    //   echo "Le email que vous avez introduit est déja utilisé !" ;
+	                    // }                     
                        
                    
 
@@ -127,7 +129,7 @@
                     </div>
                     <div class="modal-body">
                         <!-- Form Sign up -->
-                        <form method="post" action="">
+                        <form method="post" action="login.php">
                             <div class="form-group">
                                 <label for="exampleInputNickname1">Nickname</label>
                                 <input type="text" name="nickname" class="form-control" id="exampleNickname1"
@@ -150,7 +152,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                         <button type="submit" name="submit_sign_up" id="submit_sign_up" class="btn btn-primary">Sign
-                            up</button>
+                       
                     </div>
                     </form> <!-- Fin du form pour que le bouton du modal fonctionne -->
                 </div>

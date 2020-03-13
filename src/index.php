@@ -1,5 +1,20 @@
-<?php session_start(); ?>
-<?php include "includes/functions.php";?>
+<?php
+session_start(); 
+include "includes/functions.php";
+include "includes/testconnect.php";
+
+
+try{
+  // On se connecte à MySQL
+  $bdd = new PDO('mysql:host=mysql;dbname=bcbb;charset=utf8', 'root', 'root');
+  $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  }catch(Exception $e){
+  // En cas d'erreur, on affiche un message et on arrête tout
+  die('Erreur : '.$e->getMessage());
+  }
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,18 +34,29 @@
     <?php include "includes/sidebar.php";?>
     <div class="content">
 
-      <?php if (empty($_GET)) : ?>
+      <?php 
+      $req_board_details = $bdd->prepare('SELECT * from boards WHERE id =?');
+      $req_board_details->execute(array($_GET["board_id"]));
+      if(empty($_GET)): ?>
+      
       <div class="container-fluid">
         <div class="row">
-          <?php while ($boards = $request->fetch()) : ?>
+          
           <div class="col-3">
             <div class="card">
               <div class="card-body">
-                <h2><?php echo $boards["name"] ?></h2>
+              
+                <h2>
+                <?php 
+                while($boards = $req_board_details->fetch()):
+                   echo $boards["name"]; 
+                endwhile?>
+                    
+                    </h2>
               </div>
             </div>
           </div>
-          <?php endwhile?>
+          
         </div>
       </div>
       <?php endif ?>

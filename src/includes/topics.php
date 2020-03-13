@@ -5,6 +5,7 @@ try
 {
 // On se connecte à MySQL
 $bdd = new PDO('mysql:host=mysql;dbname=bcbb;charset=utf8', 'root', 'root');
+$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 }
 catch(Exception $e)
 {
@@ -46,14 +47,14 @@ $req_board_details = $bdd->prepare('SELECT * from boards WHERE id =?');
 $req_board_details->execute(array($_GET["board_id"]));
 // *****************************************************************************
 ?>
-<?php while ($board = $req_board_details->fetch()) : ?>
+<?php while($board = $req_board_details->fetch()): ?>
 
 <h1><?php echo $board["name"]?></h1>
 <p><?php echo $board["description"]?></p>
 
 <?php endwhile ?>
 
-<?php if (!empty($_SESSION)): ?>
+<?php if(!empty($_SESSION)): ?>
 <div class="d-flex flex-row">
     <button type="button" class="btn btn-success" data-toggle="collapse" data-target="#topicForm" aria-expanded="false"
         aria-controls="topicForm">New Topic</button>
