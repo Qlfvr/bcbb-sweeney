@@ -15,7 +15,7 @@ catch(Exception $e)
 die('Erreur : '.$e->getMessage());
 }
 $req_messages = $bdd->prepare(
-'SELECT messages.*, users.id AS users_id, users.nickname AS nickname, users.email AS email from messages INNER JOIN users ON
+'SELECT messages.*,users.signature AS signature, users.id AS users_id, users.nickname AS nickname, users.email AS email from messages INNER JOIN users ON
 messages.users_id = users.id WHERE topics_id =? ORDER BY creation_date ASC');
 $req_messages->execute(array($_GET["topic_id"]));
 
@@ -108,6 +108,8 @@ $req_topics->execute(array($_GET["topic_id"]));
                                 <?php 
                                 if ($messages["deleted"] == 0) {
                                     echo$messages["content"]."<br>"; 
+                                    echo "--<br>";
+                                    echo$messages["signature"];
                                 }
                                 else {
                                     echo '<i class="text-muted">This message has been deleted</i>';
