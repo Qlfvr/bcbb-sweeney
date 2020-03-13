@@ -38,7 +38,22 @@ if ($_POST["action"] == "delete_message") {
     else {
         echo "you don't have permission to delete others messages...";
     }
+}
 
- 
+if ($_POST["action"] == "edit_message") {
+
+if ($_SESSION["id"]== $_POST["user_id"]) {
+
+echo "The message has been edited";
+$query = 'UPDATE messages SET content = ? WHERE id =? ';
+$delete_message = $bdd->prepare($query);
+$delete_message->execute(array($_POST["new_content"], $_POST["message_id"]));
+echo '
+<meta http-equiv="refresh" content="2;URL=../messages.php?topic_id='.$_POST["topic_id"].'">';
+
+}
+else {
+echo "you don't have permission to edit others messages...";
+}
 }
 ?>

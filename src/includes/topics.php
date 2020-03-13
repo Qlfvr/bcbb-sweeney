@@ -54,7 +54,7 @@ $req_board_details->execute(array($_GET["board_id"]));
 
 <?php endwhile ?>
 
-<?php if(!empty($_SESSION)): ?>
+<?php if(!empty($_SESSION) && (!empty($_GET))): ?>
 <div class="d-flex flex-row">
     <button type="button" class="btn btn-success" data-toggle="collapse" data-target="#topicForm" aria-expanded="false"
         aria-controls="topicForm">New Topic</button>
