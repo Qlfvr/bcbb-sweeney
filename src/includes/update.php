@@ -12,34 +12,61 @@ catch(Exception $e)
 // En cas d'erreur, on affiche un message et on arrête tout
 die('Erreur : '.$e->getMessage());
 }
-             
 // Update autre
 
-if ($_GET["action"] == "updateusers") {
-   
-    $nickname = filter_input(INPUT_POST, "nickname", FILTER_SANITIZE_STRING);
-    $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_STRING);
-    $signature = filter_input(INPUT_POST, "signature", FILTER_SANITIZE_STRING);
-    if (!empty($nickname && $password && $signature )) {
-        $pdo = $bdd;
-        $pdo = $request = "UPDATE `users` SET `nickname` = :nickname , `password` =  :password , `signature` = :signature WHERE `id` = :id";
-        $insert = $bdd->prepare($request);
-        try {
-            $insert->execute(['nickname' => $_POST['nickname'], 'password' =>htmlspecialchars(password_hash($_POST['password'], PASSWORD_DEFAULT)), 'signature' => $_POST['signature'], 'id' => $_GET['id']]);
-            header("location:/profil.php");
+    // $nickname = filter_input(INPUT_POST, "nickname", FILTER_SANITIZE_STRING);
+    // $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_STRING);
+    // $signature = filter_input(INPUT_POST, "signature", FILTER_SANITIZE_STRING);
+    
+    if (isset($_POST["nickname"],$_POST["signature"],$_POST["id"])) {
+  $insert = $bdd->prepare("UPDATE `users` SET `nickname` = :nickname , `signature` =
+  :signature WHERE `id` = :id");
 
-        }
-        catch (PDOException $e){
+  $insert->execute(['nickname' => $_POST['nickname'], 'signature' => $_POST['signature'], 'id' => $_POST['id']]);
+    }
+      
 
-            die($e->getMessage());
+
+
+// Modification du mots de passe
+
+
+
+    if (isset($_POST["password"], $_POST["confirm-password"])){
+
+
+       if ($_POST["password"]!="") {
+
+        if ($_POST["password"] == $_POST["confirm-password"]) {
+
+
+
+if (isset($_POST["password"],$_POST["id"])) {
+$insert = $bdd->prepare("UPDATE `users` SET `password` = :password WHERE `id` = :id");
+
+$insert->execute(['password' => htmlspecialchars(password_hash($_POST['password'], PASSWORD_DEFAULT)), 'id' =>
+$_POST['id']]);
+}
+
+            
+            echo "parfait";
+        } else {
+
+            echo "pas confirmer";
         }
-    } else {
-        //echo "Insérer une valeur à chaque champ";
+
+        
+       }
+       else {
+           echo "empty password";
+       }
+
+
+
+
     }
 
 
 
-
-};
 
 ?>

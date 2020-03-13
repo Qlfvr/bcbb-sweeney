@@ -16,7 +16,7 @@ die('Erreur : '.$e->getMessage());
 }
 
 $req_messages = $bdd->prepare(
-'SELECT messages.*, users.id AS users_id, users.nickname AS nickname, users.signature AS signature, users.email AS email from messages INNER JOIN users ON
+'SELECT messages.*,users.signature AS signature, users.id AS users_id, users.nickname AS nickname, users.email AS email from messages INNER JOIN users ON
 messages.users_id = users.id WHERE topics_id =? ORDER BY creation_date ASC');
 $req_messages->execute(array($_GET["topic_id"]));
 
@@ -24,6 +24,14 @@ $req_messages->execute(array($_GET["topic_id"]));
 $req_topics = $bdd->prepare('SELECT topics.*, users.nickname AS nickname, users.email AS email FROM
 topics INNER JOIN users ON topics.users_id = users.id WHERE topics.id =?');
 $req_topics->execute(array($_GET["topic_id"]));
+
+// Emoticons
+include("includes/emoticon.php");
+
+// Markdown
+include("includes/Parsedown.php");
+$parsedown = new Parsedown();
+
 ?>
 
 
@@ -112,7 +120,21 @@ $req_topics->execute(array($_GET["topic_id"]));
                           
                             <?php 
                                 if ($messages["deleted"] == 0) {
-                                    echo$messages["content"]."<br>"; 
+                                     
+                                  
+
+                                    //Affichage smileys
+                                    $content = smileys($messages["content"]);
+                                    // echo $content;
+
+                                    //Affichage markdown
+                                    echo $parsedown->text($content);  
+                                    
+                                    echo "<br>--<br>";
+                                    echo$messages["signature"];
+
+
+
                                 }
                                 else {
                                     echo '<i class="text-muted">This message has been deleted</i>';
@@ -133,14 +155,75 @@ $req_topics->execute(array($_GET["topic_id"]));
                                 <i class="fas fa-trash-alt text-danger"></i></a> -->
                             <?php  if ($_SESSION["id"]== $messages["users_id"] && $messages["deleted"] ==0): ?>
 
-                            <form action="/includes/delete.php" method="post">
-                                <input type="hidden" name="action" value="delete_message">
-                                <input type="hidden" name="user_id" value="<?php echo $messages["users_id"]?>">
-                                <input type="hidden" name="message_id" value="<?php echo$messages["id"]?>">
-                                <input type="hidden" name="topic_id" value="<?php echo $_GET["topic_id"]?>">
-                                <button class="no-style-button" type="submit"><i
-                                        class="fas fa-trash-alt text-danger"></i></button>
-                            </form>
+                            <div>
+                                <!-- modify button -->
+
+                                <button type="button" class="no-style-button" data-toggle="modal"
+                                    data-target="#editModal"><i class="fas fa-edit text-primary"></i></button>
+
+
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="editModal" tabindex="-1" role="dialog"
+                                    aria-labelledby="editModalTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="editModalTitle">Edit</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+
+
+                                                <form class="d-inline" action="/includes/delete.php" method="post">
+
+                                                    <textarea class="w-100"
+                                                        name="new_content"><?php echo $messages["content"] ?></textarea>
+
+
+
+                                                    <input type="hidden" name="action" value="edit_message">
+                                                    <input type="hidden" name="user_id"
+                                                        value="<?php echo $messages["users_id"]?>">
+                                                    <input type="hidden" name="message_id"
+                                                        value="<?php echo$messages["id"]?>">
+                                                    <input type="hidden" name="topic_id"
+                                                        value="<?php echo $_GET["topic_id"]?>">
+
+
+
+
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Save changes</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+                                <!-- delete button -->
+
+                                <form class="d-inline" action="/includes/delete.php" method="post">
+                                    <input type="hidden" name="action" value="delete_message">
+                                    <input type="hidden" name="user_id" value="<?php echo $messages["users_id"]?>">
+                                    <input type="hidden" name="message_id" value="<?php echo$messages["id"]?>">
+                                    <input type="hidden" name="topic_id" value="<?php echo $_GET["topic_id"]?>">
+                                    <button class="no-style-button" type="submit"><i
+                                            class="fas fa-trash-alt text-danger"></i></button>
+                                </form>
+                            </div>
 
                             <?php endif ?>
 
