@@ -13,32 +13,11 @@ catch(Exception $e)
 die('Erreur : '.$e->getMessage());
 }
 
-
 $request = $bdd->prepare('SELECT * FROM boards ORDER BY id ASC');
 $request->execute(array());
-
-
-
-
-// $lasttopicreq = $bdd-> prepare (
-// 'SELECT title FROM topics WHERE boards_id =? LIMIT 1
-
-// INNER JOIN messages ON messages.topics_id = topics.id
-
-// ');
-
-
-
-
-// 'SELECT topics.*, users.nickname AS creator_nickname, users.email AS creator_email from topics INNER JOIN users ON
-// topics.users_id = users.id WHERE boards_id =? ORDER BY creation_date DESC'
-
-// ?>
-
-
-
-
-
+$lasttopicquery = $bdd->prepare('SELECT * FROM topics WHERE boards_id= ? ORDER BY id DESC LIMIT 1');
+$last3messagesquery = $bdd->prepare('SELECT * FROM messages WHERE topics_id= ? ORDER BY id DESC LIMIT 3');
+?>
 
 <?php include "includes/functions.php";?>
 <!DOCTYPE html>
@@ -54,32 +33,6 @@ $request->execute(array());
 
 <body>
 
-
-  <?php 
-
-// $lasttopicreq->execute(array(1));
-
-
-//   while ($lasttopic = $lasttopicreq->fetch()) {
-
-
-//     echo $lasttopic["title"];
-//     echo $lasttopic["content"];
-
-
-
-
-
-
-//   } 
-
-?>
-
-
-
-
-
-
   <?php include "includes/topmenu.php";?>
   <div class="wrapper">
     <?php include "includes/sidebar.php";?>
@@ -91,8 +44,26 @@ $request->execute(array());
           <?php while ($boards = $request->fetch()) : ?>
           <div class="col-3">
             <div class="card">
+
+              <div class="card-header">
+                <a href="?board_id=<?php echo$boards['id']; ?>" class="stretched-link text-decoration-none">
+
+                  <h2><?php echo $boards["name"] ?></h2>
+                </a>
+              </div>
+
               <div class="card-body">
-                <h2><?php echo $boards["name"] ?></h2>
+
+                <?php $lasttopicquery->execute(array($boards["id"])); 
+                while ($lasttopic = $lasttopicquery->fetch()) :
+                echo("<p>".$lasttopic["title"]."</p>");
+                echo"<hr>";
+                  $last3messagesquery->execute(array($lasttopic["id"]));
+                  while ($last3messages = $last3messagesquery->fetch()) :
+                  echo ("<p>".$last3messages["content"]."</p>");
+                  endwhile;
+                endwhile;
+                ?>
               </div>
             </div>
           </div>
@@ -101,11 +72,7 @@ $request->execute(array());
       </div>
       <?php endif ?>
 
-
-
       <?php include "includes/topics.php";?>
-
-
 
     </div>
   </div>

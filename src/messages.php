@@ -48,26 +48,6 @@ $parsedown = new Parsedown();
 
 <body>
 
-    <!-- <script>
-        function delete_message_ajax($bdd, $message_id) {
-
-            $.ajax({
-                url: 'ajax.php', // La ressource ciblée
-                type: 'POST', // Le type de la requête HTTP.
-                data: {
-                    action: 'delete_message',
-                    message_id: $message_id,
-                    bdd: $bdd
-
-                },
-                success: function (code_html, statut) { // code_html contient le HTML renvoyé
-                }
-
-            });
-
-        };
-    </script> -->
-
     <?php include "includes/topmenu.php";?>
     <div class="wrapper">
         <?php include "includes/sidebar.php";?>
@@ -234,8 +214,14 @@ $parsedown = new Parsedown();
                     </div>
                     <?php endwhile ; ?>
                     <!-- / Show messages -->
+                    <?php if(!empty($_SESSION)):
 
-                    <?php write_message($_GET["topic_id"], $_GET["topic_title"], $_SESSION["id"] );?>
+                     write_message($_GET["topic_id"], $_GET["topic_title"], $_SESSION["id"] );
+                     
+                     endif?>
+
+
+
                 </div>
             </div>
         </div>
