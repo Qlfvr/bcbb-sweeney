@@ -42,7 +42,7 @@ $last3messagesquery = $bdd->prepare('SELECT * FROM messages WHERE topics_id= ? O
       <div class="container-fluid">
         <div class="row">
           <?php while ($boards = $request->fetch()) : ?>
-          <div class="col-3">
+          <div class="col-md-6 col-xl-3">
             <div class="card">
 
               <div class="card-header">
@@ -56,7 +56,8 @@ $last3messagesquery = $bdd->prepare('SELECT * FROM messages WHERE topics_id= ? O
 
                 <?php $lasttopicquery->execute(array($boards["id"])); 
                 while ($lasttopic = $lasttopicquery->fetch()) :
-                echo("<p>".$lasttopic["title"]."</p>");
+                  echo "Last topic : <br>";
+                echo("<b>".$lasttopic["title"]."</b>");
                 echo"<hr>";
                   $last3messagesquery->execute(array($lasttopic["id"]));
                   while ($last3messages = $last3messagesquery->fetch()) :
