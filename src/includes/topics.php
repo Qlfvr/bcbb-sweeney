@@ -37,7 +37,12 @@ if (isset($_POST["topic_title"],$_POST["date"],$_POST["board_id"],$_POST["user_i
 // SHOW TOPICS REQUEST 
 
 $req_topics = $bdd->prepare(
-'SELECT topics.*, users.nickname AS creator_nickname, users.email AS creator_email from topics INNER JOIN users ON topics.users_id = users.id WHERE boards_id =? ORDER BY creation_date DESC'
+'SELECT topics.*, users.nickname AS creator_nickname, users.email AS creator_email, boards.pass AS board_pass
+from topics 
+INNER JOIN users ON topics.users_id = users.id 
+INNER JOIN boards ON topics.boards_id = boards.id
+
+WHERE boards_id =? ORDER BY creation_date DESC'
 
 );
 $req_topics->execute(array($_GET["board_id"]));
@@ -96,7 +101,14 @@ $req_board_details->execute(array($_GET["board_id"]));
 
 
 
-<?php while ($topics = $req_topics->fetch()) : ?>
+
+<?php 
+
+
+while ($topics = $req_topics->fetch()) :
+
+if ($topics["board_pass"] == null OR $topics["board_pass"]==$_GET["pass"]) : //Si le mots de passe de boards inclu dans la requête via le fork est null OU est équivalent à $_GET["pass"], on affiche les topics
+ ?>
 
 <div class="card mb-2 mt-2">
     <div class="container">
@@ -156,4 +168,13 @@ $req_board_details->execute(array($_GET["board_id"]));
 
 
 
-<?php endwhile; ?>
+<?php 
+
+            else:
+
+                
+
+
+            endif;
+
+endwhile; ?>
