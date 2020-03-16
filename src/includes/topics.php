@@ -152,8 +152,6 @@ if ($topics["board_pass"] == null OR $topics["board_pass"]==$_GET["pass"]) : //S
 
                 endif;?>
 
-
-
             </div>
 
             <div class="col-2 border-left p-3 d-flex justify-content-center">
@@ -164,17 +162,39 @@ if ($topics["board_pass"] == null OR $topics["board_pass"]==$_GET["pass"]) : //S
 
 </div>
 
-
-
-
-
 <?php 
 
             else:
 
-                
+
+                echo "You need a password to access this content"; ?>
+
+<form action="index.php" method="get">
+
+    <div class="form-group">
+        <label for="boardPass">Password :</label>
+        <input type="text" class="form-control" id="boardPass" name="pass" required>
+    </div>
+    <input type="hidden" name="board_id" value="<?php echo $_GET["board_id"] ?>">
+    <button type="submit" class="btn btn-primary">Unlock</button>
 
 
-            endif;
+
+
+
+
+</form>
+
+
+
+
+
+
+
+
+
+<?php
+
+endif;
 
 endwhile; ?>
