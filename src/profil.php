@@ -54,19 +54,35 @@ $email = $users['email'];
         <?php include "includes/sidebar.php";?>
 
         <div class="content">
-
-
-
-
-
-            <div class="container-fluid d-flex">
-
-
+                <div class="container-fluid d-flex">
                 <div class="m-3 text-center">
                     <h1><?php  echo $nickname;?></h1>
                     <img src="<?php echo get_gravatar($email)?>" class="avatar" alt="avatar">
-                </div>
+                    <div class="text-center">
+                        <h6>Upload a different photo...</h6>
+                        <form enctype="multipart/form-data" action="#" method="post">
+                            <input type="hidden" name="MAX_FILE_SIZE" value="250000" />
+                            <input type="file" class="center-block file-upload">
+                            <input type="submit" value="Envoyer" />
+                        </form>
+                        
+                    
+                        <?php 
+                        
+                        
+                        
+                        
 
+
+
+                        
+                        
+                        
+
+                        ?>
+                    </div>
+                </div>
+                </hr><br>
                 <!--/col-3-->
 
                 <div class="m-3 mt-5 w-100">
@@ -144,6 +160,8 @@ $email = $users['email'];
 
     <script src="/js/jquery.min.js"></script>
     <script src="/js/jquery.min.js"></script>
+    <script src="/js/profile.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
     <!-- il ne faut pas mettre src/ puisque localhost est src (racine de notre site)-->
 </body>
 
