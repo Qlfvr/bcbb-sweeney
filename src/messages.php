@@ -16,8 +16,12 @@ die('Erreur : '.$e->getMessage());
 }
 
 $req_messages = $bdd->prepare(
-'SELECT messages.*,users.signature AS signature, users.id AS users_id, users.nickname AS nickname, users.email AS email from messages INNER JOIN users ON
-messages.users_id = users.id WHERE topics_id =? ORDER BY creation_date ASC');
+'SELECT messages.*,users.signature AS signature, users.id AS users_id, users.nickname AS nickname, users.email AS email, boards.pass AS pass from messages 
+INNER JOIN users ON messages.users_id = users.id 
+INNER JOIN topics ON messages.topics_id = topics.id
+INNER JOIN boards on topics.boards_id = boards.id  
+
+WHERE topics_id =? ORDER BY creation_date ASC');
 $req_messages->execute(array($_GET["topic_id"]));
 
 //Recuperer le titre du topic et son contenu
@@ -56,7 +60,12 @@ $parsedown = new Parsedown();
 
 
             <!-- Affichage du topic -->
-            <?php while ($topics = $req_topics->fetch()) : ?>
+            <?php while ($topics = $req_topics->fetch()) : 
+                
+                // if ($topics["pass"] == null ):?>
+
+
+
             <div class="card card-message">
                 <div class="card-header">
                     <h2>Topic : <?php echo $topics["title"]; ?></h2>
@@ -75,7 +84,9 @@ $parsedown = new Parsedown();
                     </div>
                 </div>
             </div>
-            <?php  endwhile;?>
+            <?php  
+        // endif;
+        endwhile;?>
             <!-- / Affichage du topic -->
 
             <!-- Affichage des messages -->
@@ -100,7 +111,7 @@ $parsedown = new Parsedown();
 
                                 <?php 
                                 if ($messages["deleted"] == 0) {
-                                     
+                                      
                                   
 
                                     //Affichage smileys
