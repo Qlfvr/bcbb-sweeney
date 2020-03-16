@@ -60,25 +60,25 @@ $email = $users['email'];
                     <img src="<?php echo get_gravatar($email)?>" class="avatar" alt="avatar">
                     <div class="text-center">
                         <h6>Upload a different photo...</h6>
-                        <form enctype="multipart/form-data" action="#" method="post">
+                        <form enctype="multipart/form-data" action="includes/testimg.php" method="post">
                             <input type="hidden" name="MAX_FILE_SIZE" value="250000" />
                             <input type="file" class="center-block file-upload">
                             <input type="submit" value="Envoyer" />
                         </form>
                         
                     
-                        <?php 
+                        <?php include"includes/testimg.php";
+                        
+                        $rep = "SELECT img_nom, img_id " .
+                               "FROM image ORDER BY img_nom";
+                        $ret = mysql_query ($bdd) or die (mysql_error ());
+                        while ( $col = mysql_fetch_row ($rep) )
+                        {
+                            echo "<a href=\"apercu.php?id=" . $col[1] . "\">" . $col[0] . "</a><br />";
+                        }
+                     
                         
                         
-                        
-                        
-
-
-
-                        
-                        
-                        
-
                         ?>
                     </div>
                 </div>
