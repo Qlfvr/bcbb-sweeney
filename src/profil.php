@@ -67,16 +67,8 @@ $email = $users['email'];
                         </form>
                         
                     
-                        <?php include"includes/testimg.php";
-                        
-                        $rep = "SELECT img_nom, img_id " .
-                               "FROM image ORDER BY img_nom";
-                        $ret = mysql_query ($bdd) or die (mysql_error ());
-                        while ( $col = mysql_fetch_row ($rep) )
-                        {
-                            echo "<a href=\"apercu.php?id=" . $col[1] . "\">" . $col[0] . "</a><br />";
-                        }
-                     
+                        <?php 
+
                         
                         
                         ?>

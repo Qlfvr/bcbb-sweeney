@@ -1,58 +1,98 @@
 <?php 
 
+function connectToBdd(){
 
-try
-{
-// On se connecte à MySQL
-$bdd = new PDO('mysql:host=mysql;dbname=bcbb;charset=utf8', 'root', 'root');
 
-$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-}
-catch(Exception $e)
-{
-// En cas d'erreur, on affiche un message et on arrête tout
-die('Erreur : '.$e->getMessage());
-}
+    
+};
 
-function transfert(){
-        $bdd        = false;
-        $img_blob   = '';
-        $img_taille = 0;
-        $img_type   = '';
-        $img_nom    = '';
-        $taille_max = 250000;
-        $bdd        = is_uploaded_file($_FILES['fic']['tmp_name']);
-        
-        if (!$bdd) {
-            echo "Problème de transfert";
-            return false;
-        } else {
-            // Le fichier a bien été reçu
-            $img_taille = $_FILES['fic']['size'];
-            
-            if ($img_taille > $taille_max) {
-                echo "Trop gros !";
-                return false;
+
+
+// Si on clique sur  galerie
+if ($table == 'galerie'){
+    $action = filter_input(INPUT_GET, "action", FILTER_SANITIZE_STRING);
+// Insérer une image
+    echo '<div class="last"><a class="border navbar-brand4 "  href="?table=galerie&action=insert">Insérer une image</a></div> <br>';
+    if($action == "insert"){
+       
+                $fileSizeEnMega = 2;
+                $maxFileSize = $fileSizeEnMega * 1000000;
+                $allowedExtensions = ['jpg' => "image/jpeg", 'jpeg' => "image/jpeg", 'png' => "image/png", 'gif' => "image/gif"];
+                var_dump($_FILES);
+                if(isset($_FILES['img']) && $_FILES['img']['error'] == 0){
+
+                    if($_FILES['img']['size'] <= $maxFileSize){
+                        $pathInfo = pathinfo($_FILES['img']['name']);
+
+                        $extension = $pathInfo['extension'];
+                        if(array_key_exists($extension,$allowedExtensions) && mime_content_type($_FILES['img']['tmp_name']) == $allowedExtensions[$extension]){
+
+                            $uploadedFilePath = 'image/' . $_FILES['img']['name'];
+
+                            move_uploaded_file($_FILES['img']['tmp_name'], __DIR__.'/../'.$uploadedFilePath);
+                            $pdo = connectToDb();
+                            $request = "INSERT INTO `users`(`img`) VALUES (:img)";
+                            $insert = $pdo->prepare($request);
+
+                            try{
+                                $insert->execute(['img' => $uploadedFilePath]);
+
+                            }catch(PDOException $e){
+                                die($e->getMessage());
+                            }
+
+                            header('Location: admin.php?table=galerie');
+                        }else{
+                            echo 'Extension différente';
+                        }
+
+                    }else{
+                        echo '<div class="codepass1">fichier trop gros</div>';
+                    }
+
+                    //header('Location: admin.php?table=galerie');
+
+
+            }else{
+                echo '<div class="codepass1">Insérer une valeur à chaque champ</div>';
             }
-
-            $img_type = $_FILES['fic']['type'];
-            $img_nom  = $_FILES['fic']['name'];
         }
-        $img_blob = file_get_contents ($_FILES['fic']['tmp_name']);
-        $rep = "INSERT INTO image (" .
-                            "img_nom, img_taille, img_type, img_blob " .
-                            ") VALUES (" .
-                            "'" . $img_nom . "', " .
-                            "'" . $img_taille . "', " .
-                            "'" . $img_type . "', " .
-                            "'" . addslashes ($img_blob) . "') "; // N'oublions pas d'échapper le contenu binaire
-        $bdd = mysql_query ($rep) or die (mysql_error ());
-        return true;
+
+        $pdo = connectToDb();
+        $requestSelect = $pdo->query('SELECT * FROM `users`');
+        $reponse = $requestSelect;
+        $lines = $reponse->fetchAll();
+
+        // formTableGaleriePort($lines);
+
+
+// Update une image
+        // if($action == "update"){
+
+        //     formGaleriePort();
+        //     $img = filter_input(INPUT_POST, "img", FILTER_SANITIZE_STRING);
+        //     if(!empty($img)){
+        //         $pdo = connectToDb();
+        //         $request = "UPDATE `users` SET  `img` = :img WHERE `id` = :id";
+        //         $insert = $pdo->prepare($request);
+        //         $insert->execute(['img' => $_POST['img'], 'id' => $_GET['id']]);
+
+        //         header('Location: admin.php?table=galerie');
+        //     }else{
+        //         echo '<div class="codepass1">Insérer une valeur à chaque champ</div>';
+        //     }
+        // }
+
 
     }
 
 
 
+
+
+
+
+    
 
 
 ?>
