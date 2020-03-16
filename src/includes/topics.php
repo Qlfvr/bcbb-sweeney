@@ -5,7 +5,8 @@ try
 {
 // On se connecte à MySQL
 $bdd = new PDO('mysql:host=mysql;dbname=bcbb;charset=utf8', 'root', 'root');
-//$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 }
 catch(Exception $e)
 {
@@ -116,7 +117,7 @@ $req_board_details->execute(array($_GET["board_id"]));
                         <?php echo $topics["title"]; ?>
                     </a>
                 </h3>
-<!-- request last message -->
+                <!-- request last message -->
                 <?php $req_last_message->execute(array($topics["id"])); 
 
                 if ($last_message = $req_last_message->fetch()): ?>

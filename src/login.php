@@ -4,7 +4,8 @@ session_start();
 // // Connection à la base de donnée
    try {
     $bdd = new PDO('mysql:host=mysql;dbname=bcbb;charset=utf8', 'root', 'root');
-    //$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (Exception $e) {
     die('Error : ' . $e->getMessage());
 }
@@ -40,21 +41,22 @@ if(isset($_POST['submit_sign_in'])){
 ?>
 <!DOCTYPE html>
 <html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="https://kit.fontawesome.com/a990d1fe00.js" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="/css/style.css" />
-        <title>Sign in or sign up</title>
-    </head>
 
-    <body>
-        <?php include "includes/topmenu.php";?>
-        <div class="wrapper">
-            <?php include "includes/sidebar.php";?>
-            <div class="content">
-                <div class="warning">
-                     <?php 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/a990d1fe00.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/style.css" />
+    <title>Sign in or sign up</title>
+</head>
+
+<body>
+    <?php include "includes/topmenu.php";?>
+    <div class="wrapper">
+        <?php include "includes/sidebar.php";?>
+        <div class="content">
+            <div class="warning">
+                <?php 
                         $reqmail = $bdd->prepare('SELECT id FROM users WHERE email=?');
                         if(isset($_POST['submit_sign_up'])){
                             $reqmail->execute(array($_POST['email']));
@@ -111,9 +113,9 @@ if(isset($_POST['submit_sign_in'])){
                                 'password' => htmlspecialchars(password_hash($_POST['password'], PASSWORD_DEFAULT))
                             ));
                         }
-                    ?> 
-                </div>
-                <!-- <div class="box-sg">
+                    ?>
+            </div>
+            <!-- <div class="box-sg">
                     <form method="post" action="login.php">
                         <div class="form-group">
                             <label for="exampleInputNickname1">Nickname</label>
@@ -128,8 +130,9 @@ if(isset($_POST['submit_sign_in'])){
                             <button type="submit" name="submit_sign_in" id="submit_sign_in" class="btn btn-primary">Sign in</button>
                         </div> 
                     </form>-->
-                </div>
-            </div>
-        </div>    
-    </body>
+        </div>
+    </div>
+    </div>
+</body>
+
 </html>

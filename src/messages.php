@@ -7,6 +7,7 @@ try
 {
 // On se connecte à MySQL
 $bdd = new PDO('mysql:host=mysql;dbname=bcbb;charset=utf8', 'root', 'root');
+
 $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 }
 catch(Exception $e)
@@ -47,26 +48,6 @@ $parsedown = new Parsedown();
 </head>
 
 <body>
-
-    <!-- <script>
-        function delete_message_ajax($bdd, $message_id) {
-
-            $.ajax({
-                url: 'ajax.php', // La ressource ciblée
-                type: 'POST', // Le type de la requête HTTP.
-                data: {
-                    action: 'delete_message',
-                    message_id: $message_id,
-                    bdd: $bdd
-
-                },
-                success: function (code_html, statut) { // code_html contient le HTML renvoyé
-                }
-
-            });
-
-        };
-    </script> -->
 
     <?php include "includes/topmenu.php";?>
     <div class="wrapper">
@@ -112,13 +93,13 @@ $parsedown = new Parsedown();
                                 <img class="profile-pic m-auto" src="<?php echo get_gravatar($messages["email"])?>"
                                     alt=""> <br>
                                 <span class="text-muted"><?php echo $messages["nickname"]?></span>
-                              
+
                             </div>
                             <div class="pl-3 pr-3">
-                            
-                            <p><?php echo $messages["signature"]; ?></p>  
-                          
-                            <?php 
+
+                                <p><?php echo $messages["signature"]; ?></p>
+
+                                <?php 
                                 if ($messages["deleted"] == 0) {
                                      
                                   
@@ -234,8 +215,14 @@ $parsedown = new Parsedown();
                     </div>
                     <?php endwhile ; ?>
                     <!-- / Show messages -->
+                    <?php if(!empty($_SESSION)):
 
-                    <?php write_message($_GET["topic_id"], $_GET["topic_title"], $_SESSION["id"] );?>
+                     write_message($_GET["topic_id"], $_GET["topic_title"], $_SESSION["id"] );
+                     
+                     endif?>
+
+
+
                 </div>
             </div>
         </div>
