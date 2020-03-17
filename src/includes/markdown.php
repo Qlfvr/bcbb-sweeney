@@ -1,7 +1,7 @@
-<?php
-include("Parsedown.php");
+    <?php
+    include("Parsedown.php");
 
-$parsedown = new Parsedown();
-echo $parsedown->text("#Hello word !");
+    $parsedown = new Parsedown();
+    echo $parsedown->text("#Hello word !");
 
-?>
+    ?>

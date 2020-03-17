@@ -13,12 +13,7 @@ catch(Exception $e)
 die('Erreur : '.$e->getMessage());
 }
 
-// Emoticons
-include("includes/emoticon.php");
 
-// Markdown
-include("includes/Parsedown.php");
-$parsedown = new Parsedown();
 
 // create topic into database
 

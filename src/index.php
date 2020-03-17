@@ -19,7 +19,9 @@ $lasttopicquery = $bdd->prepare('SELECT * FROM topics WHERE boards_id= ? ORDER B
 $last3messagesquery = $bdd->prepare('SELECT * FROM messages WHERE topics_id= ? ORDER BY id DESC LIMIT 3');
 ?>
 
-<?php include "includes/functions.php";?>
+<?php include "includes/functions.php";
+include("includes/Parsedown.php");
+$parsedown = new Parsedown();?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -42,7 +44,7 @@ $last3messagesquery = $bdd->prepare('SELECT * FROM messages WHERE topics_id= ? O
       <div class="container-fluid">
         <div class="row">
           <?php while ($boards = $request->fetch()) : ?>
-          <div class="col-md-6 col-xl-3">
+          <div class="col-md-6">
             <div class="card mb-2">
 
               <div class="card-header">
@@ -57,17 +59,24 @@ $last3messagesquery = $bdd->prepare('SELECT * FROM messages WHERE topics_id= ? O
                 <?php $lasttopicquery->execute(array($boards["id"])); 
                 if ($boards["pass"] == null){
                   while ($lasttopic = $lasttopicquery->fetch()) :
-                    echo "Last topic : <br>";
+                  echo "Last topic : <br>";
                   echo("<b>".$lasttopic["title"]."</b>");
                   echo"<hr>";
                     $last3messagesquery->execute(array($lasttopic["id"]));
                     while ($last3messages = $last3messagesquery->fetch()) :
-                    echo ("<p>".$last3messages["content"]."</p>");
+                  
+                   //Affichage smileys
+                    $content = smileys($last3messages["content"]);
+                    //Affichage markdown
+                    echo "<p>".$parsedown->text($content)."</p>";
+                    echo "<hr>";
                     endwhile;
                   endwhile;
                 }else {
                   echo'<i class="fas fa-lock"></i>';
                 }
+                                            // $content = smileys($last_message["content"]);
+
 
 
                 ?>
