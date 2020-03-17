@@ -21,11 +21,11 @@ if (isset($_POST["topic_title"],$_POST["date"],$_POST["board_id"],$_POST["user_i
     $create_topic = $bdd->prepare('INSERT INTO topics(title, content, creation_date, boards_id, users_id)
     VALUES(:title,:content, :creation_date, :boards_id, :users_id)');
     $create_topic->execute(array(
-        'title' => $_POST["topic_title"],
-        'content' => $_POST["topic_content"],
-        'creation_date' => $_POST["date"],
-        'boards_id' => $_POST["board_id"],
-        'users_id' => $_POST["user_id"]
+        'title' => htmlspecialchars($_POST["topic_title"]),
+        'content' => htmlspecialchars($_POST["topic_content"]),
+        'creation_date' => htmlspecialchars($_POST["date"]),
+        'boards_id' => htmlspecialchars($_POST["board_id"]),
+        'users_id' => htmlspecialchars($_POST["user_id"])
     ));
 }
 

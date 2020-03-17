@@ -14,10 +14,10 @@ if (isset($_POST["message_content"],$_POST["date"],$_POST["topic_id"],$_POST["us
 $create_message = $bdd->prepare('INSERT INTO messages(content, creation_date, topics_id, users_id)
 VALUES(:content, :creation_date, :topics_id, :users_id)');
 $create_message->execute(array(
-'content' => $_POST["message_content"],
-'creation_date' => $_POST["date"],
-'topics_id' => $_POST["topic_id"],
-'users_id' => $_POST["user_id"]
+'content' => htmlspecialchars($_POST["message_content"]),
+'creation_date' => htmlspecialchars($_POST["date"]),
+'topics_id' => htmlspecialchars($_POST["topic_id"]),
+'users_id' => htmlspecialchars($_POST["user_id"])
 ));
 } 
 
