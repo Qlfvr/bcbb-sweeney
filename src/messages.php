@@ -43,7 +43,6 @@ $parsedown = new Parsedown();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/a990d1fe00.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/css/style.css" />
-    <link rel="stylesheet" href="assets/emojiarea/style.css" />
     <title>Document</title>
 </head>
 
@@ -160,16 +159,11 @@ $parsedown = new Parsedown();
 
 
                                                 <form class="d-inline" action="/includes/delete.php" method="post">
-                                                <div data-emojiarea
-                                                    data-type="image"
-                                                    data-global-picker="false"
-                                                    >
 
-                                                <i class="emoji emoji-smile emoji-button">&#x1f604;</i>
                                                     <textarea class="w-100"
                                                         name="new_content"><?php echo $messages["content"] ?></textarea>
 
-                                                </div>
+
 
                                                     <input type="hidden" name="action" value="edit_message">
                                                     <input type="hidden" name="user_id"
@@ -241,8 +235,6 @@ $parsedown = new Parsedown();
     </div>
     <script src="/js/jquery.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
-    <script src="assets/emojiarea/jquery.emojiarea.js"></script>
-    <script>EmojiArea.DEFAULTS.assetPath ='/assets/emojiarea/images';</script>
 
 
 </body>
