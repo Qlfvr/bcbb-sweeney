@@ -124,7 +124,7 @@ if ($topics["board_pass"] == null OR $topics["board_pass"]==$_GET["pass"]) : //S
             <div class="col-8 p-3">
                 <h3 class="card-title">
                     <a class="stretched-link text-decoration-none"
-                        href="messages.php?<?php echo "topic_id=".$topics["id"]."&topic_title=".$topics["title"]?>">
+                        href="messages.php?<?php echo "topic_id=".$topics["id"]."&pass=".$_GET["pass"]?>">
                         <?php echo $topics["title"]; ?>
                     </a>
                 </h3>
@@ -166,34 +166,7 @@ if ($topics["board_pass"] == null OR $topics["board_pass"]==$_GET["pass"]) : //S
 
             else:
 
-
-                echo "You need a password to access this content"; ?>
-
-<form action="index.php" method="get">
-
-    <div class="form-group">
-        <label for="boardPass">Password :</label>
-        <input type="text" class="form-control" id="boardPass" name="pass" required>
-    </div>
-    <input type="hidden" name="board_id" value="<?php echo $_GET["board_id"] ?>">
-    <button type="submit" class="btn btn-primary">Unlock</button>
-
-
-
-
-
-
-</form>
-
-
-
-
-
-
-
-
-
-<?php
+                get_pass_form();
 
 endif;
 

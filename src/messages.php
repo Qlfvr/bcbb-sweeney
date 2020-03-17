@@ -1,7 +1,6 @@
 <?php
 session_start();
  include "includes/functions.php";
-
 //Data base connexion with PDO
 try
 {
@@ -13,6 +12,19 @@ catch(Exception $e)
 {
 // En cas d'erreur, on affiche un message et on arrête tout
 die('Erreur : '.$e->getMessage());
+}
+
+
+$getpass = $bdd->prepare('SELECT pass FROM boards
+INNER JOIN topics ON topics.boards_id= boards.id
+WHERE topics.id =?');
+
+$getpass->execute(array($_GET["topic_id"]));
+
+while ($pass = $getpass->fetch()){
+
+    $boardpass = $pass["pass"];
+
 }
 
 $req_messages = $bdd->prepare(
@@ -57,14 +69,14 @@ $parsedown = new Parsedown();
         <?php include "includes/sidebar.php";?>
         <div class="content">
 
+            <?php if($boardpass==$_GET["pass"]): ?>
+
 
 
             <!-- Affichage du topic -->
             <?php while ($topics = $req_topics->fetch()) : 
                 
                 // if ($topics["pass"] == null ):?>
-
-
 
             <div class="card card-message">
                 <div class="card-header">
@@ -103,29 +115,19 @@ $parsedown = new Parsedown();
                                 <img class="profile-pic m-auto" src="<?php echo get_gravatar($messages["email"])?>"
                                     alt=""> <br>
                                 <span class="text-muted"><?php echo $messages["nickname"]?></span>
-
                             </div>
                             <div class="pl-3 pr-3">
-
                                 <p><?php echo $messages["signature"]; ?></p>
-
                                 <?php 
                                 if ($messages["deleted"] == 0) {
-                                      
-                                  
-
-                                    //Affichage smileys
+                                    //Affichage with smileys
                                     $content = smileys($messages["content"]);
                                     // echo $content;
 
                                     //Affichage markdown
                                     echo $parsedown->text($content);  
-                                    
                                     echo "<br>--<br>";
                                     echo$messages["signature"];
-
-
-
                                 }
                                 else {
                                     echo '<i class="text-muted">This message has been deleted</i>';
@@ -133,19 +135,11 @@ $parsedown = new Parsedown();
                                 ?>
                             </div>
                         </div>
-
-
                         <div class="card-footer card-message-footer d-flex justify-content-between">
                             <div class="text-muted">
                                 <span class="date"> <?php echo$messages["creation_date"] ?></span>
                             </div>
-                            <!-- <i id="deleter" class="fas fa-edit text-primary"></i>&nbsp; -->
-                            <!-- <a href="" onclick="delete_message_ajax()"><i class="fas fa-trash-alt text-danger"></i></a> -->
-                            <!-- <a
-                                href="/includes/delete.php?action=delete_message&message_id=<?php // echo $messages["id"];?>&topic_id=<?php //echo $_GET["topic_id"];?>">
-                                <i class="fas fa-trash-alt text-danger"></i></a> -->
                             <?php  if ($_SESSION["id"]== $messages["users_id"] && $messages["deleted"] ==0): ?>
-
                             <div>
                                 <!-- modify button -->
 
@@ -154,7 +148,7 @@ $parsedown = new Parsedown();
 
 
 
-                                <!-- Modal -->
+                                <!-- edit Modal -->
                                 <div class="modal fade" id="editModal" tabindex="-1" role="dialog"
                                     aria-labelledby="editModalTitle" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -198,10 +192,7 @@ $parsedown = new Parsedown();
                                         </div>
                                     </div>
                                 </div>
-
-
-
-
+                                <!-- END edit Modal -->
 
 
                                 <!-- delete button -->
@@ -215,26 +206,28 @@ $parsedown = new Parsedown();
                                             class="fas fa-trash-alt text-danger"></i></button>
                                 </form>
                             </div>
-
                             <?php endif ?>
-
-
-
-
                         </div>
                     </div>
                     <?php endwhile ; ?>
                     <!-- / Show messages -->
                     <?php if(!empty($_SESSION)):
-
-                     write_message($_GET["topic_id"], $_GET["topic_title"], $_SESSION["id"] );
-                     
-                     endif?>
-
-
+                    write_message($_GET["topic_id"], $_GET["topic_title"], $_SESSION["id"] ); 
+                    endif?>
 
                 </div>
             </div>
+
+            <?php else :
+
+                get_pass_form();
+
+            endif;
+
+            ?>
+
+
+
         </div>
     </div>
     <script src="/js/jquery.min.js"></script>

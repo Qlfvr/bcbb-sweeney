@@ -59,4 +59,21 @@ function write_message($topic_id, $topic_title, $user_id){
 
 
 
-?>
+
+function get_pass_form(){
+
+echo "<p>You need a password to access this content</p>"; ?>
+
+<form action="<?php $_SERVER['REQUEST_URI']?>" method="get">
+
+    <div class="form-group">
+        <label for="boardPass">Password :</label>
+        <input type="text" class="form-control" id="boardPass" name="pass" required>
+    </div>
+    <input type="hidden" name="board_id" value="<?php echo $_GET["board_id"]; ?>">
+    <input type="hidden" name="topic_id" value="<?php echo $_GET["topic_id"]; ?>">
+
+    <button type="submit" class="btn btn-primary">Unlock</button>
+</form>
+
+<?php } ?>
