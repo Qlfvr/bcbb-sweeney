@@ -38,23 +38,26 @@ if(isset($_POST['submit_sign_in'])){
 }
 
 ?>
+<?php include "includes/functions.php";?>
+
 <!DOCTYPE html>
 <html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="https://kit.fontawesome.com/a990d1fe00.js" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="/css/style.css" />
-        <title>Sign in or sign up</title>
-    </head>
 
-    <body>
-        <?php include "includes/topmenu.php";?>
-        <div class="wrapper">
-            <?php include "includes/sidebar.php";?>
-            <div class="content">
-                <div class="warning">
-                     <?php 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/a990d1fe00.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/style.css" />
+    <title>Sign in or sign up</title>
+</head>
+
+<body>
+    <?php include "includes/topmenu.php";?>
+    <div class="wrapper">
+        <?php include "includes/sidebar.php";?>
+        <div class="content">
+            <div class="warning">
+                <?php 
                         $reqmail = $bdd->prepare('SELECT id FROM users WHERE email=?');
                         if(isset($_POST['submit_sign_up'])){
                             $reqmail->execute(array($_POST['email']));
@@ -62,22 +65,7 @@ if(isset($_POST['submit_sign_in'])){
                             if($donnees['id'] == 0){
                             
                                 echo'Mail is valid !';
-                                echo '<div class="box-sg">';
-                                echo '<form method="post" action="login.php">';
-                                echo '<div class="form-group">';
-                                echo '<label for="exampleInputNickname1">Nickname</label>';
-                                echo '<input type="text" name="nickname" class="form-control" id="exampleNickname1" placeholder="Nickname" required>';
-                                echo '</div>';
-                                echo '<div class="form-group">';
-                                echo '<label for="exampleInputPassword1">Password</label>';
-                                echo '<input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required>';
-                                echo '</div>';
-                                echo '<div class="modal-footer">';
-                                echo '<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>';
-                                echo '<button type="submit" name="submit_sign_in" id="submit_sign_in" class="btn btn-primary">Sign in</button>';
-                                echo '</div>';
-                                echo '</form>';
-                                echo '</div>';
+                                connexion_form();
                                 
                             } else{
                                 echo '<h1>mail not valid, change email !</h1>';
@@ -111,9 +99,9 @@ if(isset($_POST['submit_sign_in'])){
                                 'password' => htmlspecialchars(password_hash($_POST['password'], PASSWORD_DEFAULT))
                             ));
                         }
-                    ?> 
-                </div>
-                <!-- <div class="box-sg">
+                    ?>
+            </div>
+            <!-- <div class="box-sg">
                     <form method="post" action="login.php">
                         <div class="form-group">
                             <label for="exampleInputNickname1">Nickname</label>
@@ -128,8 +116,12 @@ if(isset($_POST['submit_sign_in'])){
                             <button type="submit" name="submit_sign_in" id="submit_sign_in" class="btn btn-primary">Sign in</button>
                         </div> 
                     </form>-->
-                </div>
-            </div>
-        </div>    
-    </body>
+        </div>
+    </div>
+    </div>
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+</body>
+
 </html>

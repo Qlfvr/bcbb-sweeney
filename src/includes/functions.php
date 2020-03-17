@@ -76,4 +76,40 @@ echo "<p>You need a password to access this content</p>"; ?>
     <button type="submit" class="btn btn-primary">Unlock</button>
 </form>
 
-<?php } ?>
+<?php } 
+
+
+
+
+function connexion_form(){
+
+ echo '<div class="box-sg">';
+     echo '<form method="post" action="login.php">';
+         echo '<div class="form-group">';
+             echo '<label for="exampleInputNickname1">Nickname</label>';
+             echo '<input type="text" name="nickname" class="form-control" id="exampleNickname1" placeholder="Nickname"
+                 required>';
+             echo '</div>';
+         echo '<div class="form-group">';
+             echo '<label for="exampleInputPassword1">Password</label>';
+             echo '<input type="password" name="password" class="form-control" id="exampleInputPassword1"
+                 placeholder="Password" required>';
+             echo '</div>';
+         echo '<div class="modal-footer">';
+             echo '<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>';
+             echo '<button type="submit" name="submit_sign_in" id="submit_sign_in" class="btn btn-primary">Sign
+                 in</button>';
+             echo '</div>';
+         echo '</form>';
+     echo '</div>';
+
+
+
+}
+
+
+
+
+
+
+?>

@@ -76,12 +76,12 @@
                                 <input type="password" name="password" class="form-control" id="exampleInputPassword1"
                                     placeholder="Password" required>
                             </div>
-                            </div>
-                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                <button type="submit" name="submit_sign_in" id="submit_sign_in" class="btn btn-primary">Sign
-                                         in</button>
-                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="submit" name="submit_sign_in" id="submit_sign_in" class="btn btn-primary">Sign
+                            in</button>
+                    </div>
                     </form> <!-- Fin du form pour que le bouton du modal fonctionne -->
                 </div>
             </div>
@@ -122,8 +122,9 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="submit" name="submit_sign_up" id="submit_sign_up" class="btn btn-primary">Sign up </button>
-                       
+                        <button type="submit" name="submit_sign_up" id="submit_sign_up" class="btn btn-primary">Sign up
+                        </button>
+
                     </div>
                     </form> <!-- Fin du form pour que le bouton du modal fonctionne -->
                 </div>

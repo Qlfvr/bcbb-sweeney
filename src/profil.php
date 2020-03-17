@@ -27,12 +27,6 @@ $signature = $users['signature'];
 $id = $users['id'];
 $email = $users['email'];
 }
-
-
-
-
-
-
 ?>
 
 <!DOCTYPE html>
@@ -54,7 +48,7 @@ $email = $users['email'];
 
         <div class="content">
 
-
+            <?php if(isset($_SESSION["nickname"])):?>
 
 
 
@@ -134,30 +128,27 @@ $email = $users['email'];
 
         </div>
 
+
+        <?php
+
+        else : 
+
+            connexion_form();
+    
+    
+    endif; ?>
+
+
     </div>
 
 
 
-
+    </div>
 
 
     <script src="/js/jquery.min.js"></script>
-    <script src="/js/jquery.min.js"></script>
-    <!-- il ne faut pas mettre src/ puisque localhost est src (racine de notre site)-->
+    <script src="/js/bootstrap.min.js"></script>
+
 </body>
 
 </html>
-
-
-
-
-<!-- <div class="form-group">
-
-                                            <div class="col-xs-6">
-                                                <label for="password">
-                                                    <h4>Password</h4>
-                                                </label>
-                                                <input type="password" class="form-control" name="password"
-                                                    id="password" placeholder="" title="enter your password.">
-                                            </div>
-                                        </div> -->
