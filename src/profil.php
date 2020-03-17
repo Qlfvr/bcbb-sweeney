@@ -3,6 +3,7 @@ session_start();
 include('./includes/update.php');
 include('./includes/delete.php');
 include("./includes/functions.php");
+// include("testimg.php");
 
 try
 {
@@ -29,13 +30,7 @@ $id = $users['id'];
 $email = $users['email'];
 }
 
-
-
-
-
-
 ?>
-
 <!DOCTYPE html>
 <html>
 
@@ -59,19 +54,18 @@ $email = $users['email'];
                     <h1><?php  echo $nickname;?></h1>
                     <img src="<?php echo get_gravatar($email)?>" class="avatar" alt="avatar">
                     <div class="text-center">
-                        <h6>Upload a different photo...</h6>
-                        <form enctype="multipart/form-data" action="includes/testimg.php" method="post">
-                            <input type="hidden" name="MAX_FILE_SIZE" value="250000" />
-                            <input type="file" class="center-block file-upload">
-                            <input type="submit" value="Envoyer" />
-                        </form>
-                        
                     
-                        <?php 
+                        <h6>Upload a different photo...</h6>
 
+                        <?php include"testimg.php"; ?>
+                        <?php echo '<div class="last"><a class="border navbar-brand4 "  href="?table=galerie&action=insert">Insérer une image</a></div> <br>'; ?>
+                        <!-- <form method="post" action="testimg.php" enctype="multipart/form-data">
+                        <label for="image">mettre ton image</label>
+                        <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
+                            <input type="file" name="img" class="center-block file-upload" required>
+                            <button type="submit"  id="img" name=img">Envoyer</button> 
+                        </form> -->
                         
-                        
-                        ?>
                     </div>
                 </div>
                 </hr><br>
@@ -140,7 +134,7 @@ $email = $users['email'];
 
 
             </div>
-
+            
         </div>
 
     </div>
