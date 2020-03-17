@@ -30,6 +30,16 @@ function write_message($topic_id, $topic_title, $user_id){
 
     <div class="card-body">
         <form action="addmessage.php" method="post">
+        <div data-emojiarea
+            data-type="image"
+            data-global-picker="false"
+            >
+
+            <i class="emoji emoji-smile emoji-button">&#x1f604;</i>
+            <textarea class="w-100"
+                name="new_content"><?php echo $messages["content"] ?></textarea>
+
+        </div>
             <textarea name="message_content" id="message_content"class="write-message p-2"
                 placeholder="Type your message here..."></textarea>
     </div>

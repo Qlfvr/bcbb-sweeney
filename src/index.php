@@ -28,6 +28,8 @@ $last3messagesquery = $bdd->prepare('SELECT * FROM messages WHERE topics_id= ? O
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://kit.fontawesome.com/a990d1fe00.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="assets/emojiarea/style.css" />
+
   <title>Sweeney</title>
 </head>
 
@@ -79,6 +81,7 @@ $last3messagesquery = $bdd->prepare('SELECT * FROM messages WHERE topics_id= ? O
   </div>
   <script src="/js/jquery.min.js"></script>
   <script src="/js/bootstrap.min.js"></script>
+  <script src="assets/emojiarea/jquery.emojiarea.js"></script>
 </body>
 
 </html>
