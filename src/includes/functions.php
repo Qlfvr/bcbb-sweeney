@@ -30,7 +30,7 @@ function write_message($topic_id, $topic_title, $user_id){
 
     <div class="card-body">
         <form action="addmessage.php" method="post">
-            <textarea name="message_content" class="write-message p-2"
+            <textarea name="message_content" id="message_content"class="write-message p-2"
                 placeholder="Type your message here..."></textarea>
     </div>
     <div class="card-footer d-flex flex-row-reverse">

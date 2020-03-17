@@ -23,4 +23,8 @@ $create_message->execute(array(
 } 
 
 header("location:messages.php?topic_id=".$_POST['topic_id']."&topic_title=".$_POST['topic_title']);
+
+
+
+
 ?>

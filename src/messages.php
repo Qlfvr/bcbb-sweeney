@@ -217,8 +217,15 @@ $parsedown = new Parsedown();
                     <?php if(!empty($_SESSION)):
 
                      write_message($_GET["topic_id"], $_GET["topic_title"], $_SESSION["id"] );
-                     
                      endif?>
+                    <!-- Tentavive d'ajout librairire emoji
+
+                        $('#message_content').emojioneArea({
+                            pickerPosition:"top",
+                            toneStyle: "bullet"
+                           }); 
+                    -->
+                     
 
 
 
