@@ -30,33 +30,42 @@ $id = $users['id'];
 $email = $users['email'];
 }
 
+//-------------------------------------------------------------------------------------
+// error_reporting(0);
+$host="mysql";
+$user="root";
+$pass="root";
+$bdname="bcbb";
 
-// $host = 'mysql';
-// $user ='root';
-// $password = 'root';
-// $mybase ='bcbb';
-// $conn = mysqli_connect($host, $user, $password, 'bcbb');
-                        
-//  if(isset($_GET['id'])){
-//     $id = intval($_GET['id']);
-//     $req = "SELECT id_img, img " . 
-//            "FROM image WHERE id_img = " . $id;
-//     $ret = mysqli_query($conn,$req) or die (mysqli_error ($conn));
-//     $col = mysqli_fetch_row($ret);
-    
-//     if ( !$col[0] ){
-//         echo "Id d'image inconnu";
-//     } else {
-//         header ("Content-type: " . $col[1]);
-//         echo $col[2];
-//     }
+$conn=mysqli_connect($host,$user,$pass,$bdname);
 
-// } else {
-//     echo "Mauvais id d'image";
-// }
+if(!$conn){
+    die("Error".mysqli_connect_error());
+    }else{
+        if(isset($_POST['submit'])){
+            $result="";
+            $image='assets/image/'.$_FILES['image']['name'];
+            $image=mysql_real_escape_string($conn,$image);
 
-// include"testimg.php";
-//  echo '<div class="last"><a class="border navbar-brand4 "  href="?table=galerie&action=insert">Insérer une image</a></div> <br>';
+            if(preg_match("!image!",$_FILES['image']['type'])){
+                if(copy($_FILES['image']['tmp_name'], $image)){
+                    $sql="INSERT INTO image(imagepath)VALUES('$image')";
+                    if(mysqli_query($conn,$sql)){
+                        $result="Image succes!";
+                    }else{
+                        $result="image faild!";
+                    }
+                }else{
+                    $result="image faild!";
+                }
+            }else{
+                $result="only up JPG, PNG & GIF images!";
+        }
+
+    }
+}
+
+mysqli_close($conn);
 
 ?>
 <!DOCTYPE html>
@@ -81,29 +90,21 @@ $email = $users['email'];
                 <div class="m-3 text-center">
                     <h1><?php  echo $nickname;?></h1>
                     <img src="<?php echo get_gravatar($email)?>" class="avatar" alt="avatar">
-                    <!-- <img src="testimg.php?id=2"  class="avatar"/>
-                    <img src="data:image/jpeg;base64,"  class="avatar"/> -->
                     <div class="text-center">
-                    
-                        <h6>Upload a different photo...</h6>
-                             
-                            <?php
-                                include ("testimg.php");
-                                if(isset($_FILES['fic']))
-                                {
-                                    transfert();
-                                }
-                            ?>
-                         
+                    <from action="profil.php" method="POST" enctype="multipart/from-data">
+                    <label for="image">Upload Image</label>
+                    <input type="file" name="image" class="inp" required>
+                    <input type="submit" name="submit" value="Upload" class='btn-danger'>
+                    </from><br>
+                    <h2><?= $result ?></h2>
+                    <div class="card-img"><img src="<?= $image ?>"></div>
+                        <!-- <h6>Upload a different photo...</h6>                        
                          <form enctype="multipart/form-data" action="#" method="post">
                             <input type="hidden" name="MAX_FILE_SIZE" value="250000" />
                             <input type="file" name="fic" size=50 />
                             <input type="submit" value="Envoyer" />
                         </form>
-                        <p><a href="liste.php">Liste</a></p>
-
-
-
+                        <p><a href="liste.php">Liste</a></p> -->
                     </div>
                 </div>
                 </hr><br>
