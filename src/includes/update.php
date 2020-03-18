@@ -23,7 +23,14 @@ die('Erreur : '.$e->getMessage());
   :signature WHERE `id` = :id");
 
   $insert->execute(['nickname' => $_POST['nickname'], 'signature' => $_POST['signature'], 'id' => $_POST['id']]);
-    }
+    ?>
+<div class="alert alert-success alert-dismissible fade show m-0" role="alert">
+    Your profile has been updated !
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<?php }
       
 
 
@@ -49,17 +56,39 @@ $_POST['id']]);
 }
 
             
-            echo "parfait";
-        } else {
+            echo "parfait";?>
 
-            echo "pas confirmer";
-        }
+<div class="alert alert-success alert-dismissible fade show m-0" role="alert">
+    Your profile has been updated !
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+
+
+
+
+<?php
+        } else { ?>
+
+<div class="alert alert-danger alert-dismissible fade show m-0" role="alert">
+    Your password doesn't match ! <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<?php  }
 
         
        }
-       else {
-           echo "empty password";
-       }
+       else { ?>
+<div class="alert alert-danger alert-dismissible fade show m-0" role="alert">
+    You can't use an empty password ! <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<?php }
 
 
 

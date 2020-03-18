@@ -78,8 +78,6 @@ $req_board_details->execute(array($_GET["board_id"]));
         <br>
         <label for="topic-content">Your message</label><br>
         <textarea name="topic_content" id="topic-content" required></textarea>
-
-
     </div>
 
 
