@@ -22,7 +22,8 @@ return $url;
 }
 
 
-function write_message($topic_id, $topic_title, $user_id){
+function write_message($topic_id, $topic_title, $user_id, $last_message){
+
 // prepare the request 
 ?>
 
@@ -40,6 +41,8 @@ function write_message($topic_id, $topic_title, $user_id){
     <input type="hidden" name="user_id" value="<?php echo $user_id?>" />
     <input type="hidden" name="topic_id" value="<?php echo $topic_id ?>" />
     <input type="hidden" name="topic_title" value="<?php echo $topic_title ?>" />
+    <input type="hidden" name="last_message"
+        value="<?php print base64_encode(serialize($last_message)) //fait passer le tableau en string ?>">
     </form>
 </div>
 <?php

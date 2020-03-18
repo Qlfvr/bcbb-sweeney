@@ -117,7 +117,6 @@ $parsedown = new Parsedown();
                                 <span class="text-muted"><?php echo $messages["nickname"]?></span>
                             </div>
                             <div class="pl-3 pr-3">
-                                <p><?php echo $messages["signature"]; ?></p>
                                 <?php 
                                 if ($messages["deleted"] == 0) {
                                     //Affichage with smileys
@@ -126,18 +125,24 @@ $parsedown = new Parsedown();
 
                                     //Affichage markdown
                                     echo $parsedown->text($content);  
-                                    echo "<br>--<br>";
+                                    echo "--<br>";
                                     echo$messages["signature"];
                                 }
                                 else {
                                     echo '<i class="text-muted">This message has been deleted</i>';
                                 }
                                 ?>
+
                             </div>
                         </div>
                         <div class="card-footer card-message-footer d-flex justify-content-between">
                             <div class="text-muted">
-                                <span class="date"> <?php echo$messages["creation_date"] ?></span>
+                                <span class="date"> <?php echo"created on the ".$messages["creation_date"];
+                                if ($messages["edition_date"] != null) {
+                                    echo " | edited on the ".$messages["edition_date"];
+                                } ?>
+
+                                </span>
                             </div>
                             <?php  if ($_SESSION["id"]== $messages["users_id"] && $messages["deleted"] ==0): ?>
                             <div>
@@ -209,10 +214,32 @@ $parsedown = new Parsedown();
                             <?php endif ?>
                         </div>
                     </div>
+
+                    <?php
+                                
+                        $last_message_id = $messages["id"];
+                        $last_user_id = $messages["users_id"];
+
+
+                        $last_message = [
+
+                            "id" => $messages["id"],
+                            "user_id" => $messages["users_id"],
+                            "creation_date" => $messages["creation_date"],
+                            "content" => $messages["content"],
+                            "deleted" => $messages["deleted"]
+                        ];
+
+                        
+                        
+                                
+                    ?>
+
+
                     <?php endwhile ; ?>
                     <!-- / Show messages -->
                     <?php if(!empty($_SESSION)):
-                    write_message($_GET["topic_id"], $_GET["topic_title"], $_SESSION["id"] ); 
+                    write_message($_GET["topic_id"], $_GET["topic_title"], $_SESSION["id"], $last_message);
                     endif?>
 
                 </div>
@@ -224,6 +251,8 @@ $parsedown = new Parsedown();
 
             endif;
 
+
+        
             ?>
 
 
