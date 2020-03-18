@@ -29,7 +29,7 @@ $last_message = unserialize(base64_decode($_POST["last_message"])); //retransfor
 if ($last_message["user_id"] == $_POST["user_id"] && $last_message["deleted"] == 0) {
     
     $update_message->execute(array(
-    'content' => htmlspecialchars($last_message["content"])."<br>".htmlspecialchars($_POST["message_content"]),
+    'content' => ($last_message["content"])."<br>".($_POST["message_content"]),
     'edition_date' => htmlspecialchars($_POST["date"]),
     'id' => htmlspecialchars($last_message["id"])
     ));
