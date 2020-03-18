@@ -149,13 +149,14 @@ $parsedown = new Parsedown();
                                 <!-- modify button -->
 
                                 <button type="button" class="no-style-button" data-toggle="modal"
-                                    data-target="#editModal"><i class="fas fa-edit text-primary"></i></button>
+                                    data-target="#editModal<?php echo $messages["id"] ?>"><i
+                                        class="fas fa-edit text-primary"></i></button>
 
 
 
                                 <!-- edit Modal -->
-                                <div class="modal fade" id="editModal" tabindex="-1" role="dialog"
-                                    aria-labelledby="editModalTitle" aria-hidden="true">
+                                <div class="modal fade" id="editModal<?php echo $messages["id"] ?>" tabindex="-1"
+                                    role="dialog" aria-labelledby="editModalTitle" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
