@@ -2,8 +2,9 @@
 try
 {
 // On se connecte à MySQL
-$bdd = new PDO('mysql:host=mysql;dbname=bcbb;charset=utf8', 'root', 'root');
-//$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$bdd = new PDO('mysql:host=mysql;dbname=bcbb;charset=utf8mb4', 'root', 'root');
+
+$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 }
 catch(Exception $e)
 {
@@ -54,4 +55,8 @@ else{
 
 
 header("location:messages.php?topic_id=".$_POST['topic_id']."&topic_title=".$_POST['topic_title']);
+
+
+
+
 ?>
