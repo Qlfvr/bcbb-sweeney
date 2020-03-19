@@ -30,43 +30,6 @@ $id = $users['id'];
 $email = $users['email'];
 }
 
-//-------------------------------------------------------------------------------------
-// error_reporting(0);
-$host="mysql";
-$user="root";
-$pass="root";
-$bdname="bcbb";
-
-$conn=mysqli_connect($host,$user,$pass,$bdname);
-
-if(!$conn){
-    die("Error".mysqli_connect_error());
-    }else{
-        if(isset($_POST['submit'])){
-            $result="";
-            $image='assets/image/'.$_FILES['image']['name'];
-            $image=mysql_real_escape_string($conn,$image);
-
-            if(preg_match("!image!",$_FILES['image']['type'])){
-                if(copy($_FILES['image']['tmp_name'], $image)){
-                    $sql="INSERT INTO image(imagepath)VALUES('$image')";
-                    if(mysqli_query($conn,$sql)){
-                        $result="Image succes!";
-                    }else{
-                        $result="image faild!";
-                    }
-                }else{
-                    $result="image faild!";
-                }
-            }else{
-                $result="only up JPG, PNG & GIF images!";
-        }
-
-    }
-}
-
-mysqli_close($conn);
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -91,11 +54,13 @@ mysqli_close($conn);
                     <h1><?php  echo $nickname;?></h1>
                     <img src="<?php echo get_gravatar($email)?>" class="avatar" alt="avatar">
                     <div class="text-center">
-                    <from action="profil.php" method="POST" enctype="multipart/from-data">
+
+                    <from action="apercu.php" method="POST" enctype="multipart/from-data">
                     <label for="image">Upload Image</label>
                     <input type="file" name="image" class="inp" required>
                     <input type="submit" name="submit" value="Upload" class='btn-danger'>
                     </from><br>
+
                     <h2><?= $result ?></h2>
                     <div class="card-img"><img src="<?= $image ?>"></div>
                         <!-- <h6>Upload a different photo...</h6>                        

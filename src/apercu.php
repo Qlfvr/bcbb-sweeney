@@ -1,22 +1,39 @@
 <?php
     
-    if(isset($_GET['id'])){
-        $id = intval($_GET['id']);
-        include"connexion.php";
-        $req = "SELECT img_id, img_type, img_blob " . 
-               "FROM images WHERE img_id = " . $id;
-        $ret = mysqli_query($conn,$req) or die(mysql_error());
-        $col = mysqli_fetch_row($ret);
-        
-        if(!$col[0]){
-            echo "Id d'image inconnu";
-        }else{
-            header("Content-type: " . $col[1]);
-            echo $col[2];
+// error_reporting(0);
+$host="mysql";
+$user="root";
+$pass="root";
+$bdname="bcbb";
+
+$conn=mysqli_connect($host,$user,$pass,$bdname);
+
+if(!$conn){
+    die("Error".mysqli_connect_error());
+    }else{
+        if(isset($_POST['submit'])){
+            $result="";
+            $image='assets/image/'.$_FILES['image']['name'];
+            $image=mysql_real_escape_string($conn,$image);
+
+            if(preg_match("!image!",$_FILES['image']['type'])){
+                if(copy($_FILES['image']['tmp_name'], $image)){
+                    $sql="INSERT INTO image(imagepath)VALUES('$image')";
+                    if(mysqli_query($conn,$sql)){
+                        $result="Image succes!";
+                    }else{
+                        $result="image faild!";
+                    }
+                }else{
+                    $result="image faild!";
+                }
+            }else{
+                $result="only up JPG, PNG & GIF images!";
         }
 
-    }else{
-        echo "Mauvais id d'image";
     }
+}
+
+mysqli_close($conn);
 
 ?>
