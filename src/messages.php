@@ -76,6 +76,8 @@ $parsedown = new Parsedown();
 
             <!-- Affichage du topic -->
             <?php while ($topics = $req_topics->fetch()) : 
+
+            $locked= $topics["locked"];
                 
                 // if ($topics["pass"] == null ):?>
 
@@ -238,11 +240,15 @@ $parsedown = new Parsedown();
                     ?>
 
 
-                    <?php endwhile ; ?>
+                    <?php endwhile ; 
+                    
+                    ?>
                     <!-- / Show messages -->
-                    <?php if(!empty($_SESSION)):
-                    write_message($_GET["topic_id"], $_GET["topic_title"], $_SESSION["id"], $last_message);
-                    endif?>
+
+
+                    <?php if(!empty($_SESSION)){
+                    write_message($_GET["topic_id"], $_GET["topic_title"], $_SESSION["id"], $last_message, $locked);}
+                    ?>
 
                 </div>
             </div>

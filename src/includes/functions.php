@@ -22,7 +22,7 @@ return $url;
 }
 
 
-function write_message($topic_id, $topic_title, $user_id, $last_message){
+function write_message($topic_id, $topic_title, $user_id, $last_message, $locked){
 
 // prepare the request 
 ?>
@@ -31,11 +31,15 @@ function write_message($topic_id, $topic_title, $user_id, $last_message){
 
     <div class="card-body">
         <form action="addmessage.php" method="post">
-            <textarea name="message_content" id="message_content"class="write-message p-2"
-                placeholder="Type your message here..."></textarea>
+
+            <?php if ($locked){
+            echo'<fieldset disabled="disabled">';
+        }?>
+            <textarea name="message_content" id="message_content" class="write-message p-2"
+                placeholder="<?php if ($locked){echo 'This topic is locked';}else{echo 'Type your message here...';} ?>"></textarea>
     </div>
     <div class="card-footer d-flex flex-row-reverse">
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary" <?php if ($locked){echo "disabled";} ?>>Submit</button>
     </div>
     <input type="hidden" name="date" value="<?php echo$now = date('Y-m-d H:i:s'); ?>" />
     <input type="hidden" name="user_id" value="<?php echo $user_id?>" />
@@ -43,6 +47,10 @@ function write_message($topic_id, $topic_title, $user_id, $last_message){
     <input type="hidden" name="topic_title" value="<?php echo $topic_title ?>" />
     <input type="hidden" name="last_message"
         value="<?php print base64_encode(serialize($last_message)) //fait passer le tableau en string ?>">
+
+    <?php if ($locked){
+            echo'</fieldset>';
+        }?>
     </form>
 </div>
 <?php
