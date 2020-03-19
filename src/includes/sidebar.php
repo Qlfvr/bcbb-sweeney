@@ -19,9 +19,9 @@
         <li class="nav-item">
             <a class="nav-link bg-primary text-white pl-5" href="/?board_id=4">Events</a>
         </li>
-        <!-- <li class="nav-item">
-            <a class="nav-link bg-primary text-white pl-5" href="/?board_id=5">Random</a>
-        </li> -->
+        <li class="nav-item">
+            <a class="nav-link bg-primary text-white pl-5" href="/?board_id=6">Random</a>
+        </li>
 
         <li class="nav-item">
             <a class="nav-link bg-primary text-white" href="/profil.php">Profile</a>

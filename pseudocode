@@ -1,0 +1,20 @@
+
+
+
+
+"Create a Board name Random, which can only have five topics in it - when creating the sixth, the oldest topic is deleted."
+
+
+    Rechercher tocpics de Random dans bcbb
+    Afficher 5 topics dans Random
+    Si il y a un 6éme topic -> delete topic 1
+
+
+
+    Recher topics de Randm dans bcbb
+    Afficher topics
+    Si nbr_de_topic > 5 {
+        delete topic id1
+    }
+
+    SELECT * FROM topics where board_id = 6
