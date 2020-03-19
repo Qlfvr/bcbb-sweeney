@@ -1,4 +1,5 @@
 <?php
+session_start();
 if(isset($_FILES['avatar'])){ 
      $dossier = 'assets/imgtest/';
      $fichier = basename($_FILES['avatar']['name']);
@@ -49,25 +50,36 @@ if(isset($_FILES['avatar'])){
 
         }
 
-
-
+          $stockage='assets/imgtest/'.$_FILES['avatar']['name'].'';
+          $data = [
+               'naimagepathme' => $stockage,
+               'users_id' => $users_id,
+               'sex' => $sex,
+               ];
              // Insertion des données envoyées par l'internaute grâce à une requête préparée
-            $stockage='assets/imgtest/'.$_FILES['avatar']['name'].'';
-            $insertion=$bdd->prepare('INSERT INTO image(imagepath) VALUES (:imagepath)');       
-            $insertion->execute(array('imagepath' => $stockage));                          
-                if($insertion==true) {
+
+             $req_users = $bdd->prepare('SELECT * FROM users WHERE id =?');
+             $req_users->execute(array($_SESSION["id"]));
+
+          
+             $insertion=$bdd->prepare('INSERT INTO image(imagepath, users_id) VALUES (:imagepath, :users_id)');
+             $insertion->execute(array('imagepath' => $stockage, 'users_id'=> $_SESSION["id"])); 
+
+               if($insertion==true) {
                 echo '<p> Les données ont bien été enregistrées</p>';
+                echo '<meta http-equiv="refresh" content="1;URL=profil.php">'; 
+                
                 }
                 else {
                 echo 'Erreur dans l\'enregistrement des données </p>';
                     } 
-            // //recuperation
+            //recuperation
        
-            //     $recup=$bdd->prepare('SELECT * FROM image WHERE id =?');
-            //     $recup->execute(array('imagepath'=> $stockage));
-            //     while($img = $recup->fetch()){
-            //         $image=$img['imagepath'];
-            //     }
+                // $recup=$bdd->prepare('SELECT * FROM image WHERE id =?');
+                // $recup->execute(array('imagepath'=> $stockage));
+                // while($img = $recup->fetch()){
+                //     $image=$img['imagepath'];
+                // }
 
 
 

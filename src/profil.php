@@ -53,6 +53,8 @@ $email = $users['email'];
                 <div class="m-3 text-center">
                     <h1><?php  echo $nickname;?></h1>
                     <img src="<?php echo get_gravatar($email)?>" class="avatar" alt="avatar">
+                    <?php echo get_avatar()?>
+                   
                      <div class="text-center">
                      
                         <form method="POST" action="visufonc.php" enctype="multipart/form-data">
@@ -61,34 +63,7 @@ $email = $users['email'];
                         Fichier : <input type="file" name="avatar">
                         <input type="submit" name="envoyer" value="Envoyer le fichier">
                         </form><br>
-                            <?php  
-
-                            try{ // Connexion à la BDD
-                                $bdd=new PDO('mysql:host=mysql;dbname=bcbb', 'root','root');
-
-                                }
-
-                                catch(Exception $e){
-                                die ('Erreur:'.$e->getMessage());
-
-                                }
-
-                                $requestSelect = $bdd->query('SELECT * FROM `image`');
-                                $reponse = $requestSelect;
-                                $lines = $reponse->fetchAll();
-                                foreach ($lines as $line){
-
-                                
-                                    echo '<img src="'.$line['imagepath'].'">';
-                                
-                                
-                                }
-                                    
-                            ?>
-                            
-                            <div class="card-img"><img src="<?php echo $image;?>"></div>
-
-
+                          
                     </div>
                 </div>
                 </hr><br>

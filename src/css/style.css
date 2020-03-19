@@ -7175,6 +7175,9 @@ a.text-dark:hover, a.text-dark:focus {
   position: relative;
   z-index: 5; }
 
+.img-sg {
+  margin-top: -150px; }
+
 .box-sg {
   width: max-content;
   margin: auto; }

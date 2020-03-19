@@ -1,6 +1,37 @@
 <?php
 
 
+function get_avatar(){
+
+    try{ // Connexion à la BDD
+        $bdd=new PDO('mysql:host=mysql;dbname=bcbb', 'root','root');
+
+        }
+
+        catch(Exception $e){
+        die ('Erreur:'.$e->getMessage());
+
+        }
+
+        $rec_users = $bdd->prepare('SELECT * FROM users WHERE id =?');
+        $rec_users->execute(array($_SESSION["id"]));
+
+        $requestSelect = $bdd->query('SELECT * FROM `image`');
+        $reponse = $requestSelect;
+        $lines = $reponse->fetchAll();
+        foreach ($lines as $line){
+
+        if($_SESSION["id"] == $line['users_id'])
+            echo '<div class="card-img img-sg"><img src="'.$line['imagepath'].'"></div>';
+    
+
+
+            
+        }
+
+}
+
+
 function hello_world(){
 
     echo "hello world!";
