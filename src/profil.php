@@ -53,23 +53,42 @@ $email = $users['email'];
                 <div class="m-3 text-center">
                     <h1><?php  echo $nickname;?></h1>
                     <img src="<?php echo get_gravatar($email)?>" class="avatar" alt="avatar">
-                    <div class="text-center">
+                     <div class="text-center">
+                     
+                        <form method="POST" action="visufonc.php" enctype="multipart/form-data">
+                        <!-- On limite le fichier à 100Ko -->
+                        <input type="hidden" name="MAX_FILE_SIZE" value="100000">
+                        Fichier : <input type="file" name="avatar">
+                        <input type="submit" name="envoyer" value="Envoyer le fichier">
+                        </form><br>
+                            <?php  
 
-                    <from action="apercu.php" method="POST" enctype="multipart/from-data">
-                    <label for="image">Upload Image</label>
-                    <input type="file" name="image" class="inp" required>
-                    <input type="submit" name="submit" value="Upload" class='btn-danger'>
-                    </from><br>
+                            try{ // Connexion à la BDD
+                                $bdd=new PDO('mysql:host=mysql;dbname=bcbb', 'root','root');
 
-                    <h2><?= $result ?></h2>
-                    <div class="card-img"><img src="<?= $image ?>"></div>
-                        <!-- <h6>Upload a different photo...</h6>                        
-                         <form enctype="multipart/form-data" action="#" method="post">
-                            <input type="hidden" name="MAX_FILE_SIZE" value="250000" />
-                            <input type="file" name="fic" size=50 />
-                            <input type="submit" value="Envoyer" />
-                        </form>
-                        <p><a href="liste.php">Liste</a></p> -->
+                                }
+
+                                catch(Exception $e){
+                                die ('Erreur:'.$e->getMessage());
+
+                                }
+
+                                $requestSelect = $bdd->query('SELECT * FROM `image`');
+                                $reponse = $requestSelect;
+                                $lines = $reponse->fetchAll();
+                                foreach ($lines as $line){
+
+                                
+                                    echo '<img src="'.$line['imagepath'].'">';
+                                
+                                
+                                }
+                                    
+                            ?>
+                            
+                            <div class="card-img"><img src="<?php echo $image;?>"></div>
+
+
                     </div>
                 </div>
                 </hr><br>
