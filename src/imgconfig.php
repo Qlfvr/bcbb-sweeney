@@ -73,18 +73,56 @@ if(isset($_FILES['avatar'])){
                 else {
                 echo 'Erreur dans l\'enregistrement des données </p>';
                     } 
-            //recuperation
-       
-                // $recup=$bdd->prepare('SELECT * FROM image WHERE id =?');
-                // $recup->execute(array('imagepath'=> $stockage));
-                // while($img = $recup->fetch()){
-                //     $image=$img['imagepath'];
-                // }
-
-
-
+     
         $insertion->closeCursor(); // déconnexion
 
         
 
 ?>
+
+<?php 
+
+
+
+
+if($_SESSION["id"] != $line['users_id']){
+
+     $req_users = $bdd->prepare('SELECT * FROM users WHERE id =?');
+     $req_users->execute(array($_SESSION["id"]));
+
+  
+     $insertion=$bdd->prepare('INSERT INTO image(imagepath, users_id) VALUES (:imagepath, :users_id)');
+     $insertion->execute(array('imagepath' => $stockage, 'users_id'=> $_SESSION["id"])); 
+
+       if($insertion==true) {
+        echo '<p> Les données ont bien été enregistrées</p>';
+        echo '<meta http-equiv="refresh" content="1;URL=profil.php">'; 
+        
+        }
+        else {
+        echo 'Erreur dans l\'enregistrement des données </p>';
+            }
+
+}else{
+
+    //$recup_users = $bdd->prepare('SELECT * FROM users WHERE id =?');
+     //$recup_users->execute(array($_SESSION["id"]));
+
+     $mod_img = $bdd->prepare("UPDATE `image` SET `imagepath` = :imagepath WHERE `id` = :id");
+     $insert->execute(['imagepath' =>$_POST['imagepath'], 'id' =>$_POST['id']]);
+     echo '<p> Les données ont bien été enregistrées</p>';
+     echo '<meta http-equiv="refresh" content="1;URL=profil.php">'; 
+     
+}
+
+
+
+
+
+
+
+
+
+?>
+
+

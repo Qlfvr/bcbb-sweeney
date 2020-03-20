@@ -43,7 +43,6 @@ $email = $users['email'];
 </head>
 
 <body>
-
     <?php include "includes/topmenu.php";?>
     <div class="wrapper">
         <?php include "includes/sidebar.php";?>
@@ -55,9 +54,8 @@ $email = $users['email'];
                     <img src="<?php echo get_gravatar($email)?>" class="avatar" alt="avatar">
                     <?php echo get_avatar()?>
                    
-                     <div class="text-center">
-                     
-                        <form method="POST" action="visufonc.php" enctype="multipart/form-data">
+                     <div class="text-center">                     
+                        <form method="POST" action="imgconfig.php" enctype="multipart/form-data">
                         <!-- On limite le fichier à 100Ko -->
                         <input type="hidden" name="MAX_FILE_SIZE" value="100000">
                         Fichier : <input type="file" name="avatar">
@@ -144,7 +142,6 @@ $email = $users['email'];
 
     <script src="/js/jquery.min.js"></script>
     <script src="/js/jquery.min.js"></script>
-    <script src="/js/profile.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <!-- il ne faut pas mettre src/ puisque localhost est src (racine de notre site)-->
 </body>

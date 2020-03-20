@@ -23,10 +23,7 @@ function get_avatar(){
 
         if($_SESSION["id"] == $line['users_id'])
             echo '<div class="card-img img-sg"><img src="'.$line['imagepath'].'"></div>';
-    
-
-
-            
+                
         }
 
 }
