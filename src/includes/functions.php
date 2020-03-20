@@ -21,9 +21,9 @@ function get_avatar(){
         $lines = $reponse->fetchAll();
         foreach ($lines as $line){
 
-        if($_SESSION["id"] == $line['users_id'])
-            echo '<div class="card-img img-sg"><img src="'.$line['imagepath'].'"></div>';
-                
+            if($_SESSION["id"] == $line['users_id']){
+                echo '<div class="card-img img-sg"><img src="'.$line['imagepath'].'"></div>';
+            }
         }
 
 }
