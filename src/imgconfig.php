@@ -40,6 +40,9 @@ if(isset($_FILES['avatar'])){
 
 
 
+    
+
+
     try{ // Connexion à la BDD
         $bdd=new PDO('mysql:host=mysql;dbname=bcbb', 'root','root');
 
