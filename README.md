@@ -74,6 +74,6 @@ A Message can be deleted by his author, and will be shown as "deleted" in the To
 
 ---
 
-## Author
+## Authors
 
 Guillaume Boeur, Sarah Guillaume, Quentin Lefèvre.
